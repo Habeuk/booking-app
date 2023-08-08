@@ -1,0 +1,12 @@
+@use './variables.scss' as *;
+@use '@stephane888/wbu-atomique/scss/wbu-ressources-clean.scss' as *;
+@use '@stephane888/wbu-atomique/scss/bootstrap-all.scss';
+@use './ScheduleComponent.scss';
+
+.app-main-contain {
+  width: 100%;
+
+  @include media-min('bootstrap_lg') {
+    width: 75%;
+  }
+}
