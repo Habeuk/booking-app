@@ -7,8 +7,10 @@ const store = useStore()
 
 //functions
 const changeScheduleState = (indexes: { time: number; index: number }) => {
-  console.log
   store.dispatch('changeScheduleState', indexes)
+}
+const changeFilterState = (indexes: { time: number, index: number, value: boolean }) => {
+  store.dispatch('changeFilterState', indexes);
 }
 </script>
 
@@ -17,13 +19,9 @@ const changeScheduleState = (indexes: { time: number; index: number }) => {
     <div class="main-app w-100 d-flex">
       <div class="app-main-contain px-md-5 px-2 mx-auto my-auto mh-50">
         <CalendarTab v-if="false" :is-loading="false" :step-id="1" />
-        <ScheduleTab
-          v-bind="store.state.steps[1].parameters"
-          :can-select="store.state.userState.canSelect"
-          :is-loading="false"
-          :selected-schedules="store.state.steps[1].datas.schedulesCount"
-          @change-schedule-state="changeScheduleState"
-        />
+        <ScheduleTab v-bind="store.state.steps[1].parameters" :can-select="store.state.userState.canSelect"
+          :is-loading="false" :selected-schedules="store.state.steps[1].datas.schedulesCount"
+          @change-schedule-state="changeScheduleState" @change-filtred-state="changeFilterState" />
       </div>
     </div>
   </div>

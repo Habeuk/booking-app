@@ -15,6 +15,20 @@ export default new Vuex.Store({
     /**
      *
      * @param {*} param0
+     * @param {{time: number, index: number, value: boolean}} payload
+     */
+    SET_FILTER_STATE(state, payload){
+      const maxSchedules = state.steps[1].parameters.maxSchedules
+      state.steps[1].parameters.schedulesList[payload.time].times[payload.index].filtered = payload.value;
+      if (state.steps[1].datas.schedulesCount >= maxSchedules) {
+          state.userState.canSelect = false
+        } else {
+          state.userState.canSelect = true
+        }
+    },
+    /**
+     *
+     * @param {*} param0
      * @param {{time: number, index: number}} payload
      */
     SET_SCHEDULE_STATE(state, payload) {
@@ -63,6 +77,13 @@ export default new Vuex.Store({
     changeScheduleState({ commit }, payload) {
       console.log(payload)
       commit('SET_SCHEDULE_STATE', payload)
+    },
+    /**
+     * @param {*} param0
+     * @param {{time:number, index: number, value: boolean}} payload
+     */
+    changeFilterState({commit}, payload){
+      commit('SET_FILTER_STATE', payload);
     }
   },
   modules: {}

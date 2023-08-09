@@ -25,26 +25,26 @@ export const stepsList = [
         {
           name: '',
           times: [
-            { hour: 'first', active: true, selected: false, monitor: [1, 2] },
-            { hour: 'second', active: true, selected: false, monitor: [0, 1] },
-            { hour: 'third' },
-            { hour: 'forth', active: true, selected: false, monitor: [0, 2] }
+            { hour: 'first', active: true, selected: false, monitors: [1, 2], filtered: false},
+            { hour: 'second', active: true, selected: false, monitors: [0, 1], filtered: false },
+            { hour: 'third' , active: false, selected: false, monitors: [], filtered: false},
+            { hour: 'forth', active: true, selected: false, monitors: [0, 2], filtered: false }
           ]
         },
         {
           name: '',
           times: [
-            { hour: 'first' },
-            { hour: 'second', active: true, selected: true, monitor: [1, 2] },
-            { hour: 'third' },
-            { hour: 'forth', active: true, selected: true, monitor: [0, 1, 2] }
+            { hour: 'first' , active: false, selected: false, monitors: [], filtered: false},
+            { hour: 'second', active: true, selected: true, monitors: [1, 2], filtered: false },
+            { hour: 'third', active: false, selected: false, monitors: [], filtered: false },
+            { hour: 'forth', active: true, selected: true, monitors: [0, 2], filtered: false }
           ]
         }
       ],
       monitorList: [
-        { name: "Ethan", value: 1, disabled: false },
-        { name: "John", value: 2, disabled: false },
-        { name: "Amina", value: 3, disabled: false },
+        { name: "Ethan", value: 0, disabled: false },
+        { name: "John", value: 1, disabled: false },
+        { name: "Amina", value: 2, disabled: false },
       ],
       maxSchedules: 10
     },
