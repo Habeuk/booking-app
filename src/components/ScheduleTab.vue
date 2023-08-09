@@ -2,6 +2,8 @@
 import Skeleton from 'primevue/skeleton'
 import pButton from 'primevue/button'
 import Dropdown from 'primevue/dropdown'
+import SelectButton from 'primevue/selectbutton'
+
 import { ref, computed } from 'vue'
 export default {
   props: {
@@ -16,7 +18,10 @@ export default {
       }>,
       required: true
     },
-    monitorList: Array<{ name: string }>,
+    monitorList: {
+      type: Array<{ name: string; value: number; disabled: boolean }>,
+      required: true
+    },
     currentMonitor: {
       type: String,
       default: null
@@ -33,10 +38,15 @@ export default {
   },
   emits: ['validateSchedule', 'changeScheduleState'],
   setup(props, { emit }) {
+    //Refs
+    const localMonitor = ref(null)
+    //Computed
     const selectionLeft = computed(() => {
       const difference = props.maxSchedules - props.selectedSchedules
       return difference + '/' + props.maxSchedules
     })
+
+    //Functions
     const selectSchedule = (time: number, index: number) => {
       if (props.schedulesList[time].times[index].active) {
         console.log('time: ' + time + '\nindex: ' + index)
@@ -48,10 +58,11 @@ export default {
     return {
       ...props,
       selectionLeft,
+      localMonitor,
       selectSchedule
     }
   },
-  components: { Skeleton, pButton, Dropdown }
+  components: { Skeleton, pButton, Dropdown, SelectButton }
 }
 </script>
 <template>
@@ -61,7 +72,16 @@ export default {
         <span> Hello world</span>
       </h6>
       <div class="monitor-selector">
-        <Dropdown :options="monitorList" placeholder="Select a City" class="w-full md:w-14rem" />
+        <div class="monitor-form d-flex justify-content-center">
+          <SelectButton
+            v-model="localMonitor"
+            :options="monitorList"
+            optionDisabled="disabled"
+            multiple
+            optionLabel="name"
+            class="d-inline-block"
+          />
+        </div>
       </div>
       <div class="hours-content">
         <div class="block-time" v-for="(time, index) in schedulesList" :key="index">
@@ -84,16 +104,16 @@ export default {
           </div>
         </div>
       </div>
-      <div class="hours-footer d-flex justify-content-between">
-        <div class="col-md-6">({{ selectionLeft }})</div>
+      <div class="hours-footer d-flex mt-4 justify-content-between">
         <div class="hours-action w-100 row col-md-6 justify-content-between d-flex">
-          <div class="btn-container col-md-6">
-            <pButton class="w-100 mx-auto" label="hello" />
+          <div class="btn-container ml-n3 col-md-6">
+            <pButton class="ml-n3 w-100 mx-auto" label="hello" />
           </div>
           <div class="btn-container col-md-6">
             <pButton class="w-100 mx-auto" label="Secondary" severity="secondary" />
           </div>
         </div>
+        <div class="col-md-6">({{ selectionLeft }})</div>
       </div>
     </div>
     <div class="mt-2" v-show="isLoading">
