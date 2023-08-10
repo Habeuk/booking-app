@@ -5,7 +5,7 @@ export default new Vuex.Store({
     currentStep: 1,
     steps: stepsList,
     userState: {
-      canSelect: !stepsList[1].datas.schedulesCount >= stepsList[1].parameters.maxSchedules
+      canSelect: !(stepsList[1].datas.schedulesCount >= stepsList[1].parameters.maxSchedules)
     }
   },
   mutations: {
@@ -17,14 +17,15 @@ export default new Vuex.Store({
      * @param {*} param0
      * @param {{time: number, index: number, value: boolean}} payload
      */
-    SET_FILTER_STATE(state, payload){
+    SET_FILTER_STATE(state, payload) {
       const maxSchedules = state.steps[1].parameters.maxSchedules
-      state.steps[1].parameters.schedulesList[payload.time].times[payload.index].filtred = payload.value;
+      state.steps[1].parameters.schedulesList[payload.time].times[payload.index].filtred =
+        payload.value
       if (state.steps[1].datas.schedulesCount >= maxSchedules) {
-          state.userState.canSelect = false
-        } else {
-          state.userState.canSelect = true
-        }
+        state.userState.canSelect = false
+      } else {
+        state.userState.canSelect = true
+      }
     },
     /**
      *
@@ -82,8 +83,42 @@ export default new Vuex.Store({
      * @param {*} param0
      * @param {{time:number, index: number, value: boolean}} payload
      */
-    changeFilterState({commit}, payload){
-      commit('SET_FILTER_STATE', payload);
+    changeFilterState({ commit }, payload) {
+      commit('SET_FILTER_STATE', payload)
+    },
+
+    updateMonitor({ commit, state }, payload) {
+      let time = 0
+      let index = 0
+      const monitors = payload.monitors;
+      state.steps[1].parameters.schedulesList.forEach((period) => {
+        period.times.forEach((schedule) => {
+          schedule.filtred = true
+          if (!monitors.length) {
+            console.log('changin state')
+            commit('SET_FILTER_STATE', { time, index, value: false })
+          }
+          let filtred = false
+          monitors.forEach((monitorValue) => {
+            if (!filtred && !schedule.monitors.includes(monitorValue.value)) {
+              console.log('disable')
+              schedule.filtred = false
+              filtred = true
+              commit('SET_FILTER_STATE', { time, index, value: true })
+              if (schedule.selected) {
+                commit('SET_SCHEDULE_STATE', { time, index })
+              }
+            } else if (!filtred) {
+              console.log('enable')
+              commit('SET_FILTER_STATE', { time, index, value: false })
+            }
+          })
+          index += 1
+          return schedule
+        })
+        index = 0
+        time += 1
+      })
     }
   },
   modules: {}

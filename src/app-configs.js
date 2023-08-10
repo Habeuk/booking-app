@@ -1,9 +1,10 @@
 export const lang = 'fr'
 export const stepsList = [
   {
-    id: 1,
+    index: 1,
     name: 'calendar',
     title: 'Veuillez sélectionner le jour de réservation',
+    icon: "pi pi-calendar",
     selectable: false,
     isLoading: true,
     parameters: {
@@ -15,8 +16,9 @@ export const stepsList = [
     }
   },
   {
-    id: 2,
+    index: 2,
     name: 'schedule',
+    icon: 'pi pi-clock',
     title: 'veuillez selectionner les différentes plages horaires',
     selectable: false,
     isLoading: true,
@@ -25,16 +27,16 @@ export const stepsList = [
         {
           name: '',
           times: [
-            { hour: 'first', active: true, selected: false, monitors: [1, 2], filtred: false},
+            { hour: 'first', active: true, selected: false, monitors: [1, 2], filtred: false },
             { hour: 'second', active: true, selected: false, monitors: [0, 1], filtred: false },
-            { hour: 'third' , active: false, selected: false, monitors: [], filtred: false},
+            { hour: 'third', active: false, selected: false, monitors: [], filtred: false },
             { hour: 'forth', active: true, selected: false, monitors: [0, 2], filtred: false }
           ]
         },
         {
           name: '',
           times: [
-            { hour: 'first' , active: false, selected: false, monitors: [], filtred: false},
+            { hour: 'first', active: false, selected: false, monitors: [], filtred: false },
             { hour: 'second', active: true, selected: true, monitors: [1, 2], filtred: false },
             { hour: 'third', active: false, selected: false, monitors: [], filtred: false },
             { hour: 'forth', active: true, selected: true, monitors: [0, 2], filtred: false }
@@ -42,16 +44,16 @@ export const stepsList = [
         }
       ],
       monitorList: [
-        { name: "Ethan", value: 0, disabled: false },
-        { name: "John", value: 1, disabled: false },
-        { name: "Amina", value: 2, disabled: false },
+        { name: 'Ethan', value: 0, disabled: false },
+        { name: 'John', value: 1, disabled: false },
+        { name: 'Amina', value: 2, disabled: false }
       ],
       maxSchedules: 10
     },
     datas: {
       selectedSchedules: [],
       selectedMonitor: null,
-      schedulesCount: 10
+      schedulesCount: 8
     }
   }
 ]

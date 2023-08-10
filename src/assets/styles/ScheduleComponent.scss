@@ -35,7 +35,7 @@
 
   .time-btn {
     min-width: 80px;
-    max-width: 162px;
+    max-width: 140px;
     padding: 12px 18px;
     background: transparent;
     border-radius: 5px;
@@ -81,4 +81,8 @@
       transform: translateX(-50%);
     }
   }
+}
+
+.time-progress-bar {
+  height: 2px;
 }

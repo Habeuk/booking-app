@@ -15,6 +15,7 @@
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "@stephane888/wbu-atomique": "file:../wbu-atomique",
+    "primeicons": "^6.0.1",
     "primevue": "^3.31.0",
     "v-calendar": "^3.0.3",
     "vue": "^3.3.4",

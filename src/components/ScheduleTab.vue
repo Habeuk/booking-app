@@ -2,6 +2,7 @@
 import Skeleton from 'primevue/skeleton'
 import pButton from 'primevue/button'
 import SelectButton from 'primevue/selectbutton'
+import ProgressBar from 'primevue/progressbar'
 
 import { ref, computed } from 'vue'
 export default {
@@ -12,7 +13,13 @@ export default {
     },
     schedulesList: {
       type: Array<{
-        times: Array<{ hour: string, active: boolean, selected: boolean, filtred: boolean, monitors: Array<Number> }>
+        times: Array<{
+          hour: string
+          active: boolean
+          selected: boolean
+          filtred: boolean
+          monitors: Array<Number>
+        }>
         name: String
       }>,
       required: true
@@ -35,17 +42,28 @@ export default {
     },
     isLoading: Boolean
   },
-  emits: ['validateSchedule', 'changeScheduleState', 'updateFilter', 'changeFiltredState'],
+  emits: ['validateSchedule', 'changeScheduleState', 'updateMonitor', 'changeFiltredState'],
   setup(props, { emit }) {
     /************Refs**************/
     const localMonitor = ref([])
 
-
-
     /************Computed**************/
     const selectionLeft = computed(() => {
       const difference = props.maxSchedules - props.selectedSchedules
-      return difference + '/' + props.maxSchedules
+      const percentage = (props.selectedSchedules / props.maxSchedules) * 100
+      let color = null
+      switch (true) {
+        case percentage == 100:
+          color = 'red'
+          break
+        case percentage > 75:
+          color = 'orange'
+          break
+        default:
+          color = 'green'
+          break
+      }
+      return { label: difference + '/' + props.maxSchedules, percentage: percentage, color: color }
     })
 
     //Functions
@@ -56,38 +74,7 @@ export default {
       }
     }
     const updateMonitor = () => {
-      let time = 0;
-      let index = 0;
-      props.schedulesList.forEach((period) => {
-        period.times.forEach((schedule) => {
-          schedule.filtred = true;
-          if (!localMonitor.value.length) {
-            console.log("changin state")
-            emit('changeFiltredState', { time, index, value: false })
-          }
-          let filtred = false
-          localMonitor.value.forEach(monitorValue => {
-            if (!filtred && !schedule.monitors.includes(monitorValue.value)) {
-              console.log("disable")
-              schedule.filtred = false;
-              filtred = true;
-              emit('changeFiltredState', { time, index, value: true })
-              if (schedule.selected) {
-                emit('changeScheduleState', { time, index })
-              }
-            }
-            else if (!filtred) {
-              console.log("enable");
-              emit('changeFiltredState', { time, index, value: false })
-            }
-          });
-          index += 1;
-          return schedule;
-        })
-        index = 0;
-        time += 1;
-        return period;
-      })
+      emit('updateMonitor', { monitors: localMonitor.value })
     }
 
     return {
@@ -95,50 +82,69 @@ export default {
       selectionLeft,
       localMonitor,
       selectSchedule,
-      updateMonitor,
+      updateMonitor
     }
   },
-  components: { Skeleton, pButton, SelectButton }
+  components: { Skeleton, pButton, SelectButton, ProgressBar }
 }
 </script>
 <template>
   <div>
-    <div class="myi-5" v-show="!isLoading">
+    <div class="myi-5 px-md-5" v-show="!isLoading">
       <h6 class="title-steps">
         <span> Hello world</span>
       </h6>
       <div class="monitor-selector">
         <div class="monitor-form d-flex justify-content-center">
-          <SelectButton v-model="localMonitor" :options="monitorList" optionDisabled="disabled" multiple
-            optionLabel="name" class="d-inline-block" @update:modelValue="updateMonitor" />
+          <SelectButton
+            v-model="localMonitor"
+            :options="monitorList"
+            optionDisabled="disabled"
+            multiple
+            optionLabel="name"
+            class="d-inline-block"
+            @update:modelValue="updateMonitor"
+          />
         </div>
       </div>
       <div class="hours-content">
         <div class="block-time" v-for="(time, index) in schedulesList" :key="index">
           <h5 class="time-title">{{ time.name }}</h5>
-          <div class="time-list">
-            <button class="mb-2 time-btn" :class="{
-              'active-btn': (heure.active && canSelect && !heure.filtred) || heure.selected,
-              'desabled-btn': !(heure.active && canSelect) && !heure.selected || heure.filtred,
-              'selected-btn': heure.selected
-            }" v-for="(heure, i) in time.times" :key="i"
-              :disabled="!(heure.active && canSelect) && !heure.selected || heure.filtred"
-              @click="selectSchedule(index, i)">
+          <div class="time-list justify-content-between">
+            <button
+              class="mb-2 time-btn"
+              :class="{
+                'active-btn': (heure.active && canSelect && !heure.filtred) || heure.selected,
+                'desabled-btn': (!(heure.active && canSelect) && !heure.selected) || heure.filtred,
+                'selected-btn': heure.selected
+              }"
+              v-for="(heure, i) in time.times"
+              :key="i"
+              :disabled="(!(heure.active && canSelect) && !heure.selected) || heure.filtred"
+              @click="selectSchedule(index, i)"
+            >
               <span class="time">{{ heure.hour }}</span>
             </button>
           </div>
         </div>
       </div>
+      <ProgressBar
+        :showValue="false"
+        :value="selectionLeft.percentage"
+        :pt="{
+          value: { style: { background: selectionLeft.color } }
+        }"
+        class="time-progress-bar w-100"
+      ></ProgressBar>
       <div class="hours-footer d-flex mt-4 justify-content-between">
-        <div class="hours-action w-100 row col-md-6 justify-content-between d-flex">
-          <div class="btn-container ml-n3 col-md-6">
+        <div class="hours-action w-100 row col-md-7 mx-auto justify-content-between d-flex">
+          <div class="btn-container ml-n3 col-md-6 mb-3 mx-auto">
             <pButton class="ml-n3 w-100 mx-auto" label="hello" />
           </div>
-          <div class="btn-container col-md-6">
+          <div class="btn-container col-md-6 mx-auto">
             <pButton class="w-100 mx-auto" label="Secondary" severity="secondary" />
           </div>
         </div>
-        <div class="col-md-6">({{ selectionLeft }})</div>
       </div>
     </div>
     <div class="mt-2" v-show="isLoading">
