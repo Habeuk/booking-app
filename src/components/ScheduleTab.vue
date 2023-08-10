@@ -61,17 +61,24 @@ export default {
       props.schedulesList.forEach((period) => {
         period.times.forEach((schedule) => {
           schedule.filtred = true;
+          if (!localMonitor.value.length) {
+            console.log("changin state")
+            emit('changeFiltredState', { time, index, value: false })
+          }
+          let filtred = false
           localMonitor.value.forEach(monitorValue => {
-            console.log("time = " + time + "\nindex = " + index);
-            if (!schedule.monitors.includes(monitorValue.value)) {
+            if (!filtred && !schedule.monitors.includes(monitorValue.value)) {
+              console.log("disable")
               schedule.filtred = false;
+              filtred = true;
+              emit('changeFiltredState', { time, index, value: true })
               if (schedule.selected) {
-                emit('changeFiltredState', { time, index, value: true })
                 emit('changeScheduleState', { time, index })
               }
-              else {
-                emit('changeFiltredState', { time, index, value: false })
-              }
+            }
+            else if (!filtred) {
+              console.log("enable");
+              emit('changeFiltredState', { time, index, value: false })
             }
           });
           index += 1;
@@ -114,7 +121,8 @@ export default {
               'active-btn': (heure.active && canSelect && !heure.filtred) || heure.selected,
               'desabled-btn': !(heure.active && canSelect) && !heure.selected || heure.filtred,
               'selected-btn': heure.selected
-            }" v-for="(heure, i) in time.times" :key="i" :disabled="!heure.active || heure.filtred"
+            }" v-for="(heure, i) in time.times" :key="i"
+              :disabled="!(heure.active && canSelect) && !heure.selected || heure.filtred"
               @click="selectSchedule(index, i)">
               <span class="time">{{ heure.hour }}</span>
             </button>

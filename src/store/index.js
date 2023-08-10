@@ -19,7 +19,7 @@ export default new Vuex.Store({
      */
     SET_FILTER_STATE(state, payload){
       const maxSchedules = state.steps[1].parameters.maxSchedules
-      state.steps[1].parameters.schedulesList[payload.time].times[payload.index].filtered = payload.value;
+      state.steps[1].parameters.schedulesList[payload.time].times[payload.index].filtred = payload.value;
       if (state.steps[1].datas.schedulesCount >= maxSchedules) {
           state.userState.canSelect = false
         } else {

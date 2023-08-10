@@ -25,19 +25,19 @@ export const stepsList = [
         {
           name: '',
           times: [
-            { hour: 'first', active: true, selected: false, monitors: [1, 2], filtered: false},
-            { hour: 'second', active: true, selected: false, monitors: [0, 1], filtered: false },
-            { hour: 'third' , active: false, selected: false, monitors: [], filtered: false},
-            { hour: 'forth', active: true, selected: false, monitors: [0, 2], filtered: false }
+            { hour: 'first', active: true, selected: false, monitors: [1, 2], filtred: false},
+            { hour: 'second', active: true, selected: false, monitors: [0, 1], filtred: false },
+            { hour: 'third' , active: false, selected: false, monitors: [], filtred: false},
+            { hour: 'forth', active: true, selected: false, monitors: [0, 2], filtred: false }
           ]
         },
         {
           name: '',
           times: [
-            { hour: 'first' , active: false, selected: false, monitors: [], filtered: false},
-            { hour: 'second', active: true, selected: true, monitors: [1, 2], filtered: false },
-            { hour: 'third', active: false, selected: false, monitors: [], filtered: false },
-            { hour: 'forth', active: true, selected: true, monitors: [0, 2], filtered: false }
+            { hour: 'first' , active: false, selected: false, monitors: [], filtred: false},
+            { hour: 'second', active: true, selected: true, monitors: [1, 2], filtred: false },
+            { hour: 'third', active: false, selected: false, monitors: [], filtred: false },
+            { hour: 'forth', active: true, selected: true, monitors: [0, 2], filtred: false }
           ]
         }
       ],
