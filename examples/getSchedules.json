@@ -1,0 +1,19 @@
+{
+  "schedulesList": [
+    {
+      "name": "string",
+      "times": [
+        {
+          "hour": "string",
+          "active": "boolean",
+          "selected": "boolean",
+          "monitors": "array<number>",
+          "filtred": "false"
+        }
+      ]
+    }
+  ],
+  "monitorList": [{ "name": "string", "value": "number", "disabled": "boolean" }],
+  "maxSchedules": "number",
+  "schedulesCount": "number"
+}
