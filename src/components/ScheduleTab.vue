@@ -7,6 +7,8 @@ import ProgressBar from 'primevue/progressbar'
 import { ref, computed } from 'vue'
 export default {
   props: {
+    title: String,
+    icon: String,
     canSelect: {
       type: Boolean,
       required: true
@@ -18,6 +20,7 @@ export default {
           active: boolean
           selected: boolean
           filtred: boolean
+          scheduleFiltred: boolean
           monitors: Array<Number>
         }>
         name: String
@@ -42,7 +45,7 @@ export default {
     },
     isLoading: Boolean
   },
-  emits: ['validateSchedule', 'changeScheduleState', 'updateMonitor', 'changeFiltredState'],
+  emits: ['validateSchedule', 'changeScheduleState', 'updateFilter'],
   setup(props, { emit }) {
     /************Refs**************/
     const localMonitor = ref([])
@@ -73,8 +76,10 @@ export default {
         emit('changeScheduleState', { time, index })
       }
     }
-    const updateMonitor = () => {
-      emit('updateMonitor', { monitors: localMonitor.value })
+    const updateFilter = () => {
+      const monitors = localMonitor.value ? [localMonitor.value] : []
+      console.log
+      emit('updateFilter', { monitors: monitors })
     }
 
     return {
@@ -82,7 +87,7 @@ export default {
       selectionLeft,
       localMonitor,
       selectSchedule,
-      updateMonitor
+      updateFilter
     }
   },
   components: { Skeleton, pButton, SelectButton, ProgressBar }
@@ -90,20 +95,20 @@ export default {
 </script>
 <template>
   <div>
-    <div class="myi-5 px-md-5" v-show="!isLoading">
+    <div class="myi-5" v-show="!isLoading">
       <h6 class="title-steps">
-        <span> Hello world</span>
+        <span :class="icon" class="mr-2"></span>
+        <span class="title small">{{ title }}</span>
       </h6>
       <div class="monitor-selector">
-        <div class="monitor-form d-flex justify-content-center">
+        <div class="monitor-form d-flex">
           <SelectButton
             v-model="localMonitor"
             :options="monitorList"
             optionDisabled="disabled"
-            multiple
             optionLabel="name"
             class="d-inline-block"
-            @update:modelValue="updateMonitor"
+            @update:modelValue="updateFilter"
           />
         </div>
       </div>
@@ -114,13 +119,22 @@ export default {
             <button
               class="mb-2 time-btn"
               :class="{
-                'active-btn': (heure.active && canSelect && !heure.filtred) || heure.selected,
-                'desabled-btn': (!(heure.active && canSelect) && !heure.selected) || heure.filtred,
+                'active-btn':
+                  (heure.active && canSelect && !heure.filtred && !heure.scheduleFiltred) ||
+                  heure.selected,
+                'desabled-btn':
+                  (!(heure.active && canSelect) && !heure.selected) ||
+                  heure.filtred ||
+                  heure.scheduleFiltred,
                 'selected-btn': heure.selected
               }"
               v-for="(heure, i) in time.times"
               :key="i"
-              :disabled="(!(heure.active && canSelect) && !heure.selected) || heure.filtred"
+              :disabled="
+                (!(heure.active && canSelect) && !heure.selected) ||
+                heure.filtred ||
+                heure.scheduleFiltred
+              "
               @click="selectSchedule(index, i)"
             >
               <span class="time">{{ heure.hour }}</span>
@@ -137,12 +151,14 @@ export default {
         class="time-progress-bar w-100"
       ></ProgressBar>
       <div class="hours-footer d-flex mt-4 justify-content-between">
-        <div class="hours-action w-100 row col-md-7 mx-auto justify-content-between d-flex">
-          <div class="btn-container ml-n3 col-md-6 mb-3 mx-auto">
-            <pButton class="ml-n3 w-100 mx-auto" label="hello" />
-          </div>
-          <div class="btn-container col-md-6 mx-auto">
-            <pButton class="w-100 mx-auto" label="Secondary" severity="secondary" />
+        <div class="hours-action w-100 mx-auto justify-content-end d-flex">
+          <div class="btn-container pr-0">
+            <pButton
+              class="ml-n3 w-100 mx-auto submit-btn"
+              icon="pi pi-arrow-right"
+              iconPos="right"
+              label="Submit"
+            />
           </div>
         </div>
       </div>

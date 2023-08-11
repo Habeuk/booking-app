@@ -19,12 +19,28 @@ export default new Vuex.Store({
       state.currentStep += 1;
       state.steps[payload.index].selectable = true;
       for (let index = payload.index + 1; index < state.steps.length; index++) {
-        const step = state.steps[index];
-        step.selectable = false;
+        state.steps[index].selectable = false;
+        if (state.steps[index - 1].datas.value) {
+          state.steps[index].selectable = true;
+        }
       }
     },
-    SET_CURRENT_STEP(state, payload) {
-      state.currentStep = payload
+    /**
+     * 
+     * @param {number} index 
+     */
+    SET_CURRENT_STEP(state, index) {
+      state.currentStep = index
+    },
+    /**
+     * 
+     * @param {{value: boolean, index: {time: number, index: number}}} payload 
+     */
+    SET_SCH_FILTER(state, payload) {
+      const time = payload.index.time
+      const index = payload.index.index
+      console.log(payload)
+      state.steps[1].parameters.schedulesList[time].times[index].scheduleFiltred = payload.value
     },
     /**
      *
@@ -75,6 +91,13 @@ export default new Vuex.Store({
           state.userState.canSelect = true
         }
       }
+    },
+    /**
+     * 
+     * @param {{index: number, state: boolean}} payload 
+     */
+    SET_MONITOR_STATE(state, payload) {
+      state.steps[1].parameters.monitorList[payload.index].disabled = payload.state;
     }
   },
   getters: {},
@@ -85,10 +108,11 @@ export default new Vuex.Store({
       }
     },
 
-    updateMonitor({ commit, state }, payload) {
+    updateFilter({ commit, state }, payload) {
       let time = 0
       let index = 0
       const monitors = payload.monitors;
+      console.log("in");
       state.steps[1].parameters.schedulesList.forEach((period) => {
         period.times.forEach((schedule) => {
           schedule.filtred = true
@@ -118,6 +142,60 @@ export default new Vuex.Store({
         time += 1
       })
     },
+    checkScheduleStep({ commit, dispatch, state }) {
+      //shortcut for current State
+      const selectedSchedules = state.steps[1].datas.selectedSchedules
+      const schedulesList = state.steps[1].parameters.schedulesList
+
+      //handling each monitors
+      state.steps[1].parameters.monitorList.forEach(monitor => {
+        let monitorState = false;
+        if (selectedSchedules.length) {
+          selectedSchedules.forEach((schIndex) => {
+            console.log("starting");
+            const schedule = schedulesList[schIndex.time].times[schIndex.index]
+            //Disable the monitor filter if necessary
+            if (!schedule.monitors.includes(monitor.value)) {
+              monitorState = true;
+            }
+          })
+        }
+        else {
+          monitorState = true
+          schedulesList.forEach((period) => {
+            period.times.forEach(schedule => {
+              if (schedule.active && !schedule.filtred && schedule.monitors.includes(monitor.value)) {
+                monitorState = false;
+              }
+            })
+          })
+        }
+        commit("SET_MONITOR_STATE", { index: monitor.value, state: monitorState })
+      })
+      dispatch("updateAllSchedule")
+    },
+    updateAllSchedule({ commit, state }) {
+      //shortcut for current State
+      const schedulesList = state.steps[1].parameters.schedulesList
+      const monitorList = state.steps[1].parameters.monitorList
+
+      let time = 0
+      let index = 0
+      schedulesList.forEach(period => {
+        period.times.forEach(schedule => {
+          let filtred = true
+          schedule.monitors.forEach(monitor => {
+            if (!monitorList[monitor].disabled) {
+              filtred = false;
+            }
+          })
+          commit("SET_SCH_FILTER", { value: filtred, index: { time, index } })
+          index += 1
+        })
+        time += 1
+        index = 0
+      })
+    }
   },
   modules: {}
 })

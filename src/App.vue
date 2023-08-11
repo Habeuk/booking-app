@@ -10,6 +10,8 @@ const store: {
   commit: Function
 } = useStore()
 
+store.dispatch('checkScheduleStep')
+
 //computed
 const getSteps = computed(() => {
   const datas = store.state.steps.map(
@@ -21,6 +23,9 @@ const getSteps = computed(() => {
       }
       if (!step.selectable) {
         classes += ' disabled'
+      }
+      if (step.selectable) {
+        classes += ' selectable'
       }
       return {
         label: step.name,
@@ -58,13 +63,11 @@ const setStepValue = (payload: { value: any; index: number }) => {
 //--ScheduleTab actions
 const changeScheduleState = (indexes: { time: number; index: number }) => {
   store.commit('SET_SCHEDULE_STATE', indexes)
+  store.dispatch('checkScheduleStep')
 }
-const changeFilterState = (indexes: { time: number; index: number; value: boolean }) => {
-  store.commit('SET_FILTER_STATE', indexes)
-}
-const updateMonitor = (monitors: Array<{ name: string; value: number; disabled: boolean }>) => {
+const updateFilter = (monitors: Array<{ name: string; value: number; disabled: boolean }>) => {
   console.log(monitors)
-  store.dispatch('updateMonitor', monitors)
+  store.dispatch('updateFilter', monitors)
 }
 </script>
 
@@ -75,7 +78,7 @@ const updateMonitor = (monitors: Array<{ name: string; value: number; disabled: 
         <div>
           <Breadcrumb class="booking-breadcrumb mb-4" :model="getSteps">
             <template #item="{ item }">
-              <div class="btn-sm d-flex justify-content-center" @click="selectStep(item.index)">
+              <div class="py-2 d-flex justify-content-center" @click="selectStep(item.index)">
                 <span :class="item.icon" class="d-flex breadcrumb-icon mr-md-1"></span>
                 {{ item.label }}
               </div>
@@ -87,6 +90,8 @@ const updateMonitor = (monitors: Array<{ name: string; value: number; disabled: 
           v-if="store.state.currentStep == 0"
           :is-loading="false"
           :step-id="1"
+          :title="store.state.steps[0].name"
+          :icon="store.state.steps[0].icon"
           @set-date="setStepValue"
           class="animate"
         />
@@ -96,9 +101,10 @@ const updateMonitor = (monitors: Array<{ name: string; value: number; disabled: 
           :can-select="store.state.userState.canSelect"
           :is-loading="false"
           :selected-schedules="store.state.steps[1].datas.schedulesCount"
+          :title="store.state.steps[1].name"
+          :icon="store.state.steps[1].icon"
           @change-schedule-state="changeScheduleState"
-          @change-filtred-state="changeFilterState"
-          @update-monitor="updateMonitor"
+          @update-filter="updateFilter"
           class="animate"
         />
       </div>

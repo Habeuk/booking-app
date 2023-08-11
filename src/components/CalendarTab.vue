@@ -6,6 +6,8 @@ export default {
   props: {
     isLoading: Boolean,
     stepId: Number,
+    title: String,
+    icon: String,
     unavailableDates: {
       type: [],
       default: null
@@ -52,6 +54,10 @@ export default {
     <Skeleton width="100%" height="220px" class="mb-2"></Skeleton>
   </div>
   <div class="main-contain" v-else>
+    <h6 class="title-steps">
+      <span :class="icon" class="mr-2"></span>
+      <span class="title small">{{ title }}</span>
+    </h6>
     <VCalendar
       :attributes="attr"
       :disabled-dates="disabledDates"
