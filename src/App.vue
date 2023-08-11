@@ -4,36 +4,63 @@ import CalendarTab from './components/CalendarTab.vue'
 import ScheduleTab from './components/ScheduleTab.vue'
 import Breadcrumb from 'primevue/breadcrumb'
 import { computed } from 'vue'
-const store = useStore()
+const store: {
+  state: { steps: Array<any>; currentStep: number; userState: { canSelect: boolean } }
+  dispatch: Function
+  commit: Function
+} = useStore()
 
 //computed
 const getSteps = computed(() => {
-  return store.state.steps.map((step: { name: string; index: number; icon: string; selectable: boolean }) => {
-    const active = step.index == store.state.currentStep
-    let classes = active ? 'active-step' : 'inactive-step'
-    if (step.index < store.state.currentStep) {
-      classes = 'passed-step'
+  const datas = store.state.steps.map(
+    (step: { name: string; index: number; icon: string; selectable: boolean }) => {
+      const active = step.index == store.state.currentStep
+      let classes = active ? 'active-step' : 'inactive-step'
+      if (step.index < store.state.currentStep) {
+        classes = 'passed-step'
+      }
+      if (!step.selectable) {
+        classes += ' disabled'
+      }
+      return {
+        label: step.name,
+        index: step.index,
+        icon: step.icon,
+        separator: true,
+        selectable: step.selectable,
+        class: classes
+      }
     }
-    if (!step.selectable) {
-      classes += " disabled"
-    }
-    return {
-      label: step.name,
-      index: step.index,
-      icon: step.icon,
-      separator: true,
-      selectable: step.selectable,
-      class: classes
-    }
-  })
+  )
+  console.log(datas)
+  return datas
 })
 
-//functions
+//**********functions**********//
+
+//-Actions
+//-breadcrumb actions
+
+const selectStep = (index: number) => {
+  console.log(index)
+  if (store.state.steps[index].selectable) {
+    store.commit('SET_CURRENT_STEP', index)
+  }
+}
+
+//--CalendarTab actions
+
+const setStepValue = (payload: { value: any; index: number }) => {
+  console.log(payload)
+  store.commit('SET_STEP_VALUE', payload)
+}
+
+//--ScheduleTab actions
 const changeScheduleState = (indexes: { time: number; index: number }) => {
-  store.dispatch('changeScheduleState', indexes)
+  store.commit('SET_SCHEDULE_STATE', indexes)
 }
 const changeFilterState = (indexes: { time: number; index: number; value: boolean }) => {
-  store.dispatch('changeFilterState', indexes)
+  store.commit('SET_FILTER_STATE', indexes)
 }
 const updateMonitor = (monitors: Array<{ name: string; value: number; disabled: boolean }>) => {
   console.log(monitors)
@@ -48,19 +75,32 @@ const updateMonitor = (monitors: Array<{ name: string; value: number; disabled: 
         <div>
           <Breadcrumb class="booking-breadcrumb mb-4" :model="getSteps">
             <template #item="{ item }">
-              <div class="btn-sm">
-                <span :class="item.icon"></span>
+              <div class="btn-sm d-flex justify-content-center" @click="selectStep(item.index)">
+                <span :class="item.icon" class="d-flex breadcrumb-icon mr-md-1"></span>
                 {{ item.label }}
               </div>
             </template>
             <template #separator></template>
           </Breadcrumb>
         </div>
-        <CalendarTab v-if="store.state.currentStep == 1" :is-loading="false" :step-id="1" class="animate" />
-        <ScheduleTab v-if="store.state.currentStep == 2" v-bind="store.state.steps[1].parameters"
-          :can-select="store.state.userState.canSelect" :is-loading="false"
-          :selected-schedules="store.state.steps[1].datas.schedulesCount" @change-schedule-state="changeScheduleState"
-          @change-filtred-state="changeFilterState" @update-monitor="updateMonitor" class="animate" />
+        <CalendarTab
+          v-if="store.state.currentStep == 0"
+          :is-loading="false"
+          :step-id="1"
+          @set-date="setStepValue"
+          class="animate"
+        />
+        <ScheduleTab
+          v-if="store.state.currentStep == 1"
+          v-bind="store.state.steps[1].parameters"
+          :can-select="store.state.userState.canSelect"
+          :is-loading="false"
+          :selected-schedules="store.state.steps[1].datas.schedulesCount"
+          @change-schedule-state="changeScheduleState"
+          @change-filtred-state="changeFilterState"
+          @update-monitor="updateMonitor"
+          class="animate"
+        />
       </div>
     </div>
   </div>

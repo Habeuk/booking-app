@@ -1,10 +1,10 @@
 export const lang = 'fr'
 export const stepsList = [
   {
-    index: 1,
+    index: 0,
     name: 'calendar',
     title: 'Veuillez sélectionner le jour de réservation',
-    icon: "pi pi-calendar",
+    icon: 'pi pi-calendar',
     selectable: false,
     isLoading: true,
     parameters: {
@@ -12,11 +12,11 @@ export const stepsList = [
       locale: lang
     },
     datas: {
-      selectedDate: null
+      value: null
     }
   },
   {
-    index: 2,
+    index: 1,
     name: 'schedule',
     icon: 'pi pi-clock',
     title: 'veuillez selectionner les différentes plages horaires',
@@ -53,7 +53,8 @@ export const stepsList = [
     datas: {
       selectedSchedules: [],
       selectedMonitor: null,
-      schedulesCount: 8
+      schedulesCount: 8,
+      value: null,
     }
   }
 ]

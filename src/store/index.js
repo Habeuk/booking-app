@@ -2,13 +2,27 @@ import { stepsList } from '../app-configs'
 import Vuex from 'vuex'
 export default new Vuex.Store({
   state: {
-    currentStep: 1,
+    currentStep: 0,
     steps: stepsList,
     userState: {
       canSelect: !(stepsList[1].datas.schedulesCount >= stepsList[1].parameters.maxSchedules)
     }
   },
   mutations: {
+    /**
+     * 
+     * @param {{value: any, index: number}} date 
+     */
+    SET_STEP_VALUE(state, payload) {
+      console.log(payload)
+      state.steps[payload.index].datas.value = payload.value;
+      state.currentStep += 1;
+      state.steps[payload.index].selectable = true;
+      for (let index = payload.index + 1; index < state.steps.length; index++) {
+        const step = state.steps[index];
+        step.selectable = false;
+      }
+    },
     SET_CURRENT_STEP(state, payload) {
       state.currentStep = payload
     },
@@ -70,22 +84,6 @@ export default new Vuex.Store({
         commit('SET_CURRENT_STEP', payload.stepId)
       }
     },
-    /**
-     *
-     * @param {*} param0
-     * @param {{time: number, index: number}} payload
-     */
-    changeScheduleState({ commit }, payload) {
-      console.log(payload)
-      commit('SET_SCHEDULE_STATE', payload)
-    },
-    /**
-     * @param {*} param0
-     * @param {{time:number, index: number, value: boolean}} payload
-     */
-    changeFilterState({ commit }, payload) {
-      commit('SET_FILTER_STATE', payload)
-    },
 
     updateMonitor({ commit, state }, payload) {
       let time = 0
@@ -119,7 +117,7 @@ export default new Vuex.Store({
         index = 0
         time += 1
       })
-    }
+    },
   },
   modules: {}
 })
