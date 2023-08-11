@@ -8,17 +8,21 @@ const store = useStore()
 
 //computed
 const getSteps = computed(() => {
-  return store.state.steps.map((step: { name: string; index: number; icon: string }) => {
+  return store.state.steps.map((step: { name: string; index: number; icon: string; selectable: boolean }) => {
     const active = step.index == store.state.currentStep
     let classes = active ? 'active-step' : 'inactive-step'
     if (step.index < store.state.currentStep) {
       classes = 'passed-step'
+    }
+    if (!step.selectable) {
+      classes += " disabled"
     }
     return {
       label: step.name,
       index: step.index,
       icon: step.icon,
       separator: true,
+      selectable: step.selectable,
       class: classes
     }
   })
@@ -52,23 +56,11 @@ const updateMonitor = (monitors: Array<{ name: string; value: number; disabled: 
             <template #separator></template>
           </Breadcrumb>
         </div>
-        <CalendarTab
-          v-if="store.state.currentStep == 1"
-          :is-loading="false"
-          :step-id="1"
-          class="animate"
-        />
-        <ScheduleTab
-          v-if="store.state.currentStep == 2"
-          v-bind="store.state.steps[1].parameters"
-          :can-select="store.state.userState.canSelect"
-          :is-loading="false"
-          :selected-schedules="store.state.steps[1].datas.schedulesCount"
-          @change-schedule-state="changeScheduleState"
-          @change-filtred-state="changeFilterState"
-          @update-monitor="updateMonitor"
-          class="animate"
-        />
+        <CalendarTab v-if="store.state.currentStep == 1" :is-loading="false" :step-id="1" class="animate" />
+        <ScheduleTab v-if="store.state.currentStep == 2" v-bind="store.state.steps[1].parameters"
+          :can-select="store.state.userState.canSelect" :is-loading="false"
+          :selected-schedules="store.state.steps[1].datas.schedulesCount" @change-schedule-state="changeScheduleState"
+          @change-filtred-state="changeFilterState" @update-monitor="updateMonitor" class="animate" />
       </div>
     </div>
   </div>
@@ -77,8 +69,10 @@ const updateMonitor = (monitors: Array<{ name: string; value: number; disabled: 
 <style lang="scss" scoped>
 .main-app {
   min-height: 100vh;
+
   .p-breadcrumb {
     padding: 0px;
+
     .breadcrumb-element {
       padding: 16px;
     }

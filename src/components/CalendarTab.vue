@@ -52,14 +52,8 @@ export default {
     <Skeleton width="100%" height="220px" class="mb-2"></Skeleton>
   </div>
   <div class="main-contain" v-else>
-    <VCalendar
-      :attributes="attr"
-      :disabled-dates="disabledDates"
-      @dayclick="onSelect"
-      color="blue"
-      locale="fr"
-      expanded
-    />
+    <VCalendar :attributes="attr" :disabled-dates="disabledDates" @dayclick="onSelect" color="blue" locale="fr"
+      expanded />
   </div>
 </template>
 <style lang="scss" scoped>

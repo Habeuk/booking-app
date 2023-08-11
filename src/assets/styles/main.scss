@@ -15,68 +15,61 @@
     justify-content: center !important;
     background-color: $primary-color-estomped;
 
-    &>ol {
+    & > ol {
       width: 100%;
 
       li {
         flex: auto;
-      }
+        transition: $bg-transition;
+        &.p-menuitem {
+          &.disabled {
+            cursor: not-allowed;
+          }
+          &.active-step,
+          &.passed-step {
+            background-color: $primary-color;
 
+            & + .p-menuitem-separator {
+              &::before {
+                background-color: $primary-color;
+              }
+            }
+          }
+          &.passed-step {
+            & + .p-menuitem-separator {
+              background-color: $primary-color;
+            }
+          }
+        }
+      }
       .p-menuitem-separator {
+        position: relative;
         max-width: fit-content;
         height: 100%;
-        margin-left: -1px;
-        margin-right: 0px;
-      }
-
-      .passed-step {
-        &+.p-menuitem-separator {
-          background-color: $primary-color;
-        }
-      }
-
-      .passed-step,
-      .active-step {
-        background-color: $primary-color;
-
-        &+.p-menuitem-separator {
-          svg {
-            color: white;
-            z-index: 999;
-            transition: color 0.3s ease;
-          }
-        }
-      }
-
-      .active-step {
-
-        &+.p-menuitem-separator {
-          position: relative;
-
-          &::before {
-            content: "";
-            clip-path: polygon(1px 0%, 100% 50%, 1px 100%);
-            position: absolute;
-            background: $primary-color;
-            width: 100%;
-            height: 100%;
-            right: 0;
-            top: 0;
-            z-index: 998;
-          }
+        margin: 0px 0px 0px -1px;
+        &::before {
+          content: '';
+          clip-path: polygon(1px 0%, 100% 50%, 1px 100%);
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          right: 0;
+          top: 0;
+          z-index: 998;
+          transition: $bg-transition;
         }
       }
     }
 
     .app-step {
       display: inline-block;
-
     }
-
   }
 
   .animate {
-    transition: opacity 0.4s, transform 0.3s;
+    transition:
+      opacity 0.4s,
+      transform 0.3s;
     animation: animateFade 0.4s linear;
   }
 
