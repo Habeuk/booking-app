@@ -56,7 +56,7 @@ export default {
   <div class="main-contain" v-else>
     <h6 class="title-steps">
       <span :class="icon" class="mr-2"></span>
-      <span class="title small">{{ title }}</span>
+      <span>{{ title }}</span>
     </h6>
     <VCalendar
       :attributes="attr"

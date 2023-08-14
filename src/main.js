@@ -2,7 +2,7 @@ import 'primevue/resources/themes/lara-light-indigo/theme.css'
 import './assets/main.css'
 import 'v-calendar/style.css'
 import './assets/styles/main.scss'
-import 'primeicons/primeicons.css';
+import 'primeicons/primeicons.css'
 import store from './store'
 // import 'bootstrap/dist/css/bootstrap.min.css'
 // import 'bootstrap/scss/_functions.scss'

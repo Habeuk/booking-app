@@ -5,7 +5,7 @@ export const stepsList = [
     name: 'calendar',
     title: 'Veuillez sélectionner le jour de réservation',
     icon: 'pi pi-calendar',
-    selectable: false,
+    selectable: true,
     isLoading: true,
     parameters: {
       disabledDate: [],
@@ -27,19 +27,75 @@ export const stepsList = [
         {
           name: '',
           times: [
-            { hour: 'first', active: true, selected: false, monitors: [1, 2], scheduleFiltred: false, filtred: false },
-            { hour: 'second', active: true, selected: false, monitors: [0, 1], scheduleFiltred: false, filtred: false },
-            { hour: 'third', active: false, selected: false, monitors: [], scheduleFiltred: false, filtred: false },
-            { hour: 'forth', active: true, selected: false, monitors: [2], scheduleFiltred: false, filtred: false }
+            {
+              hour: 'first',
+              active: true,
+              selected: false,
+              monitors: [1, 2],
+              scheduleFiltred: false,
+              filtred: false
+            },
+            {
+              hour: 'second',
+              active: true,
+              selected: false,
+              monitors: [0, 1],
+              scheduleFiltred: false,
+              filtred: false
+            },
+            {
+              hour: 'third',
+              active: false,
+              selected: false,
+              monitors: [],
+              scheduleFiltred: false,
+              filtred: false
+            },
+            {
+              hour: 'forth',
+              active: true,
+              selected: false,
+              monitors: [2],
+              scheduleFiltred: false,
+              filtred: false
+            }
           ]
         },
         {
           name: '',
           times: [
-            { hour: 'first', active: false, selected: false, monitors: [], scheduleFiltred: false, filtred: false },
-            { hour: 'second', active: true, selected: true, monitors: [1, 2], scheduleFiltred: false, filtred: false },
-            { hour: 'third', active: false, selected: false, monitors: [], scheduleFiltred: false, filtred: false },
-            { hour: 'forth', active: true, selected: true, monitors: [1, 2], scheduleFiltred: false, filtred: false }
+            {
+              hour: 'first',
+              active: false,
+              selected: false,
+              monitors: [],
+              scheduleFiltred: false,
+              filtred: false
+            },
+            {
+              hour: 'second',
+              active: true,
+              selected: true,
+              monitors: [1, 2],
+              scheduleFiltred: false,
+              filtred: false
+            },
+            {
+              hour: 'third',
+              active: false,
+              selected: false,
+              monitors: [],
+              scheduleFiltred: false,
+              filtred: false
+            },
+            {
+              hour: 'forth',
+              active: true,
+              selected: true,
+              monitors: [1, 2],
+              scheduleFiltred: false,
+              filtred: false
+            }
           ]
         }
       ],
@@ -51,10 +107,20 @@ export const stepsList = [
       maxSchedules: 10
     },
     datas: {
-      selectedSchedules: [{ time: 1, index: 1 }, { time: 1, index: 3 }],
+      selectedSchedules: [
+        { time: 1, index: 1 },
+        { time: 1, index: 3 }
+      ],
       selectedMonitor: null,
       schedulesCount: 8,
-      value: null,
+      value: null
     }
+  },
+  {
+    index: 2,
+    name: 'Résumé',
+    icon: 'pi pi-server',
+    selectable: false,
+    isLoading: false
   }
 ]
