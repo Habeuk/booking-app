@@ -10,31 +10,31 @@ export default new Vuex.Store({
   },
   mutations: {
     /**
-     * 
-     * @param {{value: any, index: number}} date 
+     *
+     * @param {{value: any, index: number}} date
      */
     SET_STEP_VALUE(state, payload) {
       console.log(payload)
-      state.steps[payload.index].datas.value = payload.value;
-      state.currentStep += 1;
-      state.steps[payload.index].selectable = true;
+      state.steps[payload.index].datas.value = payload.value
+      state.currentStep += 1
+      state.steps[payload.index].selectable = true
       for (let index = payload.index + 1; index < state.steps.length; index++) {
-        state.steps[index].selectable = false;
+        state.steps[index].selectable = false
         if (state.steps[index - 1].datas.value) {
-          state.steps[index].selectable = true;
+          state.steps[index].selectable = true
         }
       }
     },
     /**
-     * 
-     * @param {number} index 
+     *
+     * @param {number} index
      */
     SET_CURRENT_STEP(state, index) {
       state.currentStep = index
     },
     /**
-     * 
-     * @param {{value: boolean, index: {time: number, index: number}}} payload 
+     *
+     * @param {{value: boolean, index: {time: number, index: number}}} payload
      */
     SET_SCH_FILTER(state, payload) {
       const time = payload.index.time
@@ -93,11 +93,11 @@ export default new Vuex.Store({
       }
     },
     /**
-     * 
-     * @param {{index: number, state: boolean}} payload 
+     *
+     * @param {{index: number, state: boolean}} payload
      */
     SET_MONITOR_STATE(state, payload) {
-      state.steps[1].parameters.monitorList[payload.index].disabled = payload.state;
+      state.steps[1].parameters.monitorList[payload.index].disabled = payload.state
     }
   },
   getters: {},
@@ -111,8 +111,8 @@ export default new Vuex.Store({
     updateFilter({ commit, state }, payload) {
       let time = 0
       let index = 0
-      const monitors = payload.monitors;
-      console.log("in");
+      const monitors = payload.monitors
+      console.log('in')
       state.steps[1].parameters.schedulesList.forEach((period) => {
         period.times.forEach((schedule) => {
           schedule.filtred = true
@@ -148,31 +148,34 @@ export default new Vuex.Store({
       const schedulesList = state.steps[1].parameters.schedulesList
 
       //handling each monitors
-      state.steps[1].parameters.monitorList.forEach(monitor => {
-        let monitorState = false;
+      state.steps[1].parameters.monitorList.forEach((monitor) => {
+        let monitorState = false
         if (selectedSchedules.length) {
           selectedSchedules.forEach((schIndex) => {
-            console.log("starting");
+            console.log('starting')
             const schedule = schedulesList[schIndex.time].times[schIndex.index]
             //Disable the monitor filter if necessary
             if (!schedule.monitors.includes(monitor.value)) {
-              monitorState = true;
+              monitorState = true
             }
           })
-        }
-        else {
+        } else {
           monitorState = true
           schedulesList.forEach((period) => {
-            period.times.forEach(schedule => {
-              if (schedule.active && !schedule.filtred && schedule.monitors.includes(monitor.value)) {
-                monitorState = false;
+            period.times.forEach((schedule) => {
+              if (
+                schedule.active &&
+                !schedule.filtred &&
+                schedule.monitors.includes(monitor.value)
+              ) {
+                monitorState = false
               }
             })
           })
         }
-        commit("SET_MONITOR_STATE", { index: monitor.value, state: monitorState })
+        commit('SET_MONITOR_STATE', { index: monitor.value, state: monitorState })
       })
-      dispatch("updateAllSchedule")
+      dispatch('updateAllSchedule')
     },
     updateAllSchedule({ commit, state }) {
       //shortcut for current State
@@ -181,15 +184,15 @@ export default new Vuex.Store({
 
       let time = 0
       let index = 0
-      schedulesList.forEach(period => {
-        period.times.forEach(schedule => {
+      schedulesList.forEach((period) => {
+        period.times.forEach((schedule) => {
           let filtred = true
-          schedule.monitors.forEach(monitor => {
+          schedule.monitors.forEach((monitor) => {
             if (!monitorList[monitor].disabled) {
-              filtred = false;
+              filtred = false
             }
           })
-          commit("SET_SCH_FILTER", { value: filtred, index: { time, index } })
+          commit('SET_SCH_FILTER', { value: filtred, index: { time, index } })
           index += 1
         })
         time += 1

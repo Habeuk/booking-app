@@ -33,7 +33,8 @@ const getSteps = computed(() => {
         icon: step.icon,
         separator: true,
         selectable: step.selectable,
-        class: classes
+        class: classes,
+        displayName: step.index < store.state.currentStep
       }
     }
   )
@@ -75,38 +76,40 @@ const updateFilter = (monitors: Array<{ name: string; value: number; disabled: b
   <div class="main-app-container container">
     <div class="main-app w-100 d-flex">
       <div class="app-main-contain px-md-5 px-2 mx-auto mt-5 mh-50">
-        <div>
-          <Breadcrumb class="booking-breadcrumb mb-4" :model="getSteps">
-            <template #item="{ item }">
-              <div class="py-2 d-flex justify-content-center" @click="selectStep(item.index)">
-                <span :class="item.icon" class="d-flex breadcrumb-icon mr-md-1"></span>
-                {{ item.label }}
-              </div>
-            </template>
-            <template #separator></template>
-          </Breadcrumb>
+        <div class="px-5">
+          <div>
+            <Breadcrumb class="booking-breadcrumb mb-4" :model="getSteps">
+              <template #item="{ item }">
+                <div class="py-2 d-flex justify-content-center" @click="selectStep(item.index)">
+                  <span :class="item.icon" class="d-flex breadcrumb-icon mr-md-1"></span>
+                  <span class="step-label">{{ item.label }}</span>
+                </div>
+              </template>
+              <template #separator></template>
+            </Breadcrumb>
+          </div>
+          <CalendarTab
+            v-if="store.state.currentStep == 0"
+            :is-loading="false"
+            :step-id="1"
+            :title="store.state.steps[0].title"
+            :icon="store.state.steps[0].icon"
+            @set-date="setStepValue"
+            class="animate"
+          />
+          <ScheduleTab
+            v-if="store.state.currentStep == 1"
+            v-bind="store.state.steps[1].parameters"
+            :can-select="store.state.userState.canSelect"
+            :is-loading="false"
+            :selected-schedules="store.state.steps[1].datas.schedulesCount"
+            :title="store.state.steps[1].title"
+            :icon="store.state.steps[1].icon"
+            @change-schedule-state="changeScheduleState"
+            @update-filter="updateFilter"
+            class="animate"
+          />
         </div>
-        <CalendarTab
-          v-if="store.state.currentStep == 0"
-          :is-loading="false"
-          :step-id="1"
-          :title="store.state.steps[0].name"
-          :icon="store.state.steps[0].icon"
-          @set-date="setStepValue"
-          class="animate"
-        />
-        <ScheduleTab
-          v-if="store.state.currentStep == 1"
-          v-bind="store.state.steps[1].parameters"
-          :can-select="store.state.userState.canSelect"
-          :is-loading="false"
-          :selected-schedules="store.state.steps[1].datas.schedulesCount"
-          :title="store.state.steps[1].name"
-          :icon="store.state.steps[1].icon"
-          @change-schedule-state="changeScheduleState"
-          @update-filter="updateFilter"
-          class="animate"
-        />
       </div>
     </div>
   </div>

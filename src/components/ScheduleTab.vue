@@ -98,7 +98,7 @@ export default {
     <div class="myi-5" v-show="!isLoading">
       <h6 class="title-steps">
         <span :class="icon" class="mr-2"></span>
-        <span class="title small">{{ title }}</span>
+        <span>{{ title }}</span>
       </h6>
       <div class="monitor-selector">
         <div class="monitor-form d-flex">

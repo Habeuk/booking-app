@@ -3,9 +3,25 @@
 @use '@stephane888/wbu-atomique/scss/bootstrap-all.scss';
 @use './ScheduleComponent.scss';
 
+html {
+  font-size: 62.5%;
+}
+
+.p-component,
+.pi {
+  font-size: 1.6rem;
+}
+
 .app-main-contain {
   width: 100%;
   max-width: 750px;
+
+  .title-steps {
+    span {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+  }
 
   @include media-min('bootstrap_lg') {
     width: 75%;
@@ -28,12 +44,23 @@
             margin-block: auto;
           }
 
+          max-width: fit-content;
+
           &.disabled {
             cursor: not-allowed;
           }
 
           &.selectable {
             cursor: pointer;
+            width: auto;
+
+            .step-label {
+              display: inline;
+            }
+          }
+
+          .step-label {
+            display: none;
           }
 
           &.active-step,
