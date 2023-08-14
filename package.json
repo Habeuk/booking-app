@@ -5,7 +5,8 @@
   "scripts": {
     "predev": "prettier --write src/",
     "dev": "vite",
-    "Dev": "vite build --watch --mode development  --outDir files",
+    "Dev": "vite build --watch --mode development  --outDir files2",
+    "Prod": "vite build --watch --mode production  --outDir files2",  
     "build": "run-p type-check build-only",
     "preview": "vite preview",
     "build-only": "vite build",
