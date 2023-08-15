@@ -37,7 +37,7 @@ html {
 
       li {
         flex: auto;
-        transition: $bg-transition, $color-transition;
+        transition: $bg-transition, $color-transition, max-width 0.2s ease-in;
 
         &.p-menuitem {
           .breadcrumb-icon::before {
@@ -45,6 +45,7 @@ html {
           }
 
           max-width: fit-content;
+          min-width: 100px;
 
           &.disabled {
             cursor: not-allowed;
@@ -52,7 +53,7 @@ html {
 
           &.selectable {
             cursor: pointer;
-            width: auto;
+            max-width: none;
 
             .step-label {
               display: inline;
