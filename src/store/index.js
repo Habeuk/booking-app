@@ -3,7 +3,9 @@ import Vuex from 'vuex'
 import config from '../rootConfig'
 export default new Vuex.Store({
   state: {
-    dateConfigUrl: '/booking-system/views-app-default?_format=json',
+    dateCalendarUrl: '/booking-system/views-app-calendar?_format=json',
+    // format de l'url Peut dans un getters. :)
+    // dateCreneauxUrl:'/booking-system/views-app-creneaux/{booking_config_type_id}/{date}?_format=json',
     requestErrorMessage: '',
     currentStep: 0,
     steps: stepsList,
@@ -215,10 +217,14 @@ export default new Vuex.Store({
         index = 0
       })
     },
+    /**
+     * Recupere les données pour la configuration du calendrier.
+     * @param {*} param0
+     */
     loadDatesConfig({ state }) {
       // use dGet to enable authentication
       config
-        .dGet(state.dateConfigUrl)
+        .dGet(state.dateCalendarUrl)
         .then((response) => {
           // mapping reponse with defautl value.
           console.log('response : ', response)
