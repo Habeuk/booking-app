@@ -6,11 +6,20 @@ import Breadcrumb from 'primevue/breadcrumb'
 import { computed } from 'vue'
 const store: {
   state: { steps: Array<any>; currentStep: number; userState: { canSelect: boolean } }
+  getters: { calandarConfig: Array<any> }
   dispatch: Function
   commit: Function
 } = useStore()
-
+/**
+ * Par defaut on charge l'etape du calendar.
+ */
+store.dispatch('loadDatesConfig').then((resp) => {
+  // Run function require data from BD.
+  console.log('resp', resp)
+})
 store.dispatch('checkScheduleStep')
+
+console.log('calandarConfig : ', store.getters.calandarConfig)
 
 //computed
 const getSteps = computed(() => {
@@ -41,7 +50,11 @@ const getSteps = computed(() => {
   console.log(datas)
   return datas
 })
+const calandarConfig = computed(() => {
+  return store.getters.calandarConfig
+})
 
+console.log('calandarConfig', calandarConfig)
 //**********functions**********//
 
 //-Actions

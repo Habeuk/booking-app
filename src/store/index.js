@@ -1,11 +1,19 @@
-import { stepsList } from '../app-configs'
+import { stepsList } from './app-configs'
 import Vuex from 'vuex'
+import config from '../rootConfig'
 export default new Vuex.Store({
   state: {
+    dateConfigUrl: '/booking-system/views-app-default?_format=json',
+    requestErrorMessage: '',
     currentStep: 0,
     steps: stepsList,
     userState: {
       canSelect: !(stepsList[1].datas.schedulesCount >= stepsList[1].parameters.maxSchedules)
+    }
+  },
+  getters: {
+    calandarConfig(state) {
+      return state.steps[0]
     }
   },
   mutations: {
@@ -142,6 +150,10 @@ export default new Vuex.Store({
         time += 1
       })
     },
+    /**
+     * à documenter ( vystii ! )
+     * @param {*} param0
+     */
     checkScheduleStep({ commit, dispatch, state }) {
       //shortcut for current State
       const selectedSchedules = state.steps[1].datas.selectedSchedules
@@ -177,6 +189,10 @@ export default new Vuex.Store({
       })
       dispatch('updateAllSchedule')
     },
+    /**
+     * Désactiver les créneaux qui n'ont pas au moins un moniteur en commun avec les créneaux déjà selectionnés
+     * @param {*} param0
+     */
     updateAllSchedule({ commit, state }) {
       //shortcut for current State
       const schedulesList = state.steps[1].parameters.schedulesList
@@ -198,6 +214,18 @@ export default new Vuex.Store({
         time += 1
         index = 0
       })
+    },
+    loadDatesConfig({ state }) {
+      // use dGet to enable authentication
+      config
+        .dGet(state.dateConfigUrl)
+        .then((response) => {
+          // mapping reponse with defautl value.
+          console.log('response : ', response)
+        })
+        .catch((err) => {
+          state.requestErrorMessage = err.statusText
+        })
     }
   },
   modules: {}

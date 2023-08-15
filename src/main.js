@@ -13,7 +13,12 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import PrimeVue from 'primevue/config'
 import Vcalendar from 'v-calendar'
-const myApp = createApp(App)
+const myApp = createApp(App, {
+  mounted() {
+    // merged options exposed on this.$options
+    console.log('Application montée')
+  }
+})
 myApp.use(store)
 myApp.use(PrimeVue)
 myApp.use(Vcalendar, {})

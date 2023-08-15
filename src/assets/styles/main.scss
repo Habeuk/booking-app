@@ -32,7 +32,7 @@ html {
     justify-content: center !important;
     background-color: $primary-color-estomped;
 
-    &>ol {
+    & > ol {
       width: 100%;
 
       li {
@@ -68,7 +68,7 @@ html {
             color: white;
             background-color: $primary-color;
 
-            &+.p-menuitem-separator {
+            & + .p-menuitem-separator {
               svg {
                 color: white;
               }
@@ -80,7 +80,7 @@ html {
           }
 
           &.passed-step {
-            &+.p-menuitem-separator {
+            & + .p-menuitem-separator {
               background-color: $primary-color;
             }
           }

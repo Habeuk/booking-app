@@ -9,7 +9,8 @@ export const stepsList = [
     isLoading: true,
     parameters: {
       disabledDate: [],
-      locale: lang
+      locale: lang,
+      initialPage: { month: 8, year: 2022 }
     },
     datas: {
       value: null

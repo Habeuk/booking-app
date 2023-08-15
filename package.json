@@ -6,7 +6,7 @@
     "predev": "prettier --write src/",
     "dev": "vite",
     "Dev": "vite build --watch --mode development  --outDir files2",
-    "Prod": "vite build --watch --mode production  --outDir files2",  
+    "Prod": "vite build --watch --mode production  --outDir files2",
     "build": "run-p type-check build-only",
     "preview": "vite preview",
     "build-only": "vite build",
@@ -17,6 +17,7 @@
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "@stephane888/wbu-atomique": "file:../wbu-atomique",
+    "drupal-vuejs": "file:../drupal-vuejs",
     "primeicons": "^6.0.1",
     "primevue": "^3.31.0",
     "v-calendar": "^3.0.3",
