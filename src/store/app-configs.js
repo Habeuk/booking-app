@@ -5,10 +5,11 @@ export const stepsList = [
     name: 'calendar',
     title: 'Veuillez sélectionner le jour de réservation',
     icon: 'pi pi-calendar',
+    url: "/booking-system/views-app-calendar/",
     selectable: true,
     isLoading: true,
     parameters: {
-      disabledDate: [],
+      disabledDates: [],
       locale: lang,
       initialPage: { month: 8, year: 2022 }
     },
@@ -19,8 +20,9 @@ export const stepsList = [
   {
     index: 1,
     name: 'schedule',
-    icon: 'pi pi-clock',
     title: 'veuillez selectionner les différentes plages horaires',
+    icon: 'pi pi-clock',
+    url: "/booking-system/views-app-creneaux/",
     selectable: false,
     isLoading: true,
     parameters: {
@@ -113,7 +115,7 @@ export const stepsList = [
         { time: 1, index: 3 }
       ],
       selectedMonitor: null,
-      schedulesCount: 8,
+      schedulesCount: 0,
       value: null
     }
   },
@@ -122,6 +124,9 @@ export const stepsList = [
     name: 'Résumé',
     icon: 'pi pi-server',
     selectable: false,
-    isLoading: false
+    isLoading: false,
+    datas: {
+      value: null
+    }
   }
 ]

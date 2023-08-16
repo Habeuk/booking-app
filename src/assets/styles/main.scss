@@ -37,7 +37,10 @@ html {
 
       li {
         flex: auto;
-        transition: $bg-transition, $color-transition, max-width 0.2s ease-in;
+        transition:
+          $bg-transition,
+          $color-transition,
+          max-width 0.2s ease-in;
 
         &.p-menuitem {
           .breadcrumb-icon::before {

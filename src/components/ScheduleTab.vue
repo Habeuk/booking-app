@@ -82,11 +82,15 @@ export default {
       emit('updateFilter', { monitors: monitors })
     }
 
+    const submitDatas = () => {
+      console.log('submit')
+    }
     return {
       ...props,
       selectionLeft,
       localMonitor,
       selectSchedule,
+      submitDatas,
       updateFilter
     }
   },
@@ -154,6 +158,7 @@ export default {
         <div class="hours-action w-100 mx-auto justify-content-end d-flex">
           <div class="btn-container pr-0">
             <pButton
+              @click="submitDatas"
               class="ml-n3 w-100 mx-auto submit-btn"
               icon="pi pi-arrow-right"
               iconPos="right"

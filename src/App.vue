@@ -6,20 +6,12 @@ import Breadcrumb from 'primevue/breadcrumb'
 import { computed } from 'vue'
 const store: {
   state: { steps: Array<any>; currentStep: number; userState: { canSelect: boolean } }
-  getters: { calandarConfig: Array<any> }
   dispatch: Function
   commit: Function
 } = useStore()
-/**
- * Par defaut on charge l'etape du calendar.
- */
-store.dispatch('loadDatesConfig').then((resp) => {
-  // Run function require data from BD.
-  console.log('resp', resp)
-})
-store.dispatch('checkScheduleStep')
 
-console.log('calandarConfig : ', store.getters.calandarConfig)
+store.dispatch('checkScheduleStep')
+store.dispatch('loadConfigs')
 
 //computed
 const getSteps = computed(() => {
@@ -47,21 +39,15 @@ const getSteps = computed(() => {
       }
     }
   )
-  console.log(datas)
   return datas
 })
-const calandarConfig = computed(() => {
-  return store.getters.calandarConfig
-})
 
-console.log('calandarConfig', calandarConfig)
 //**********functions**********//
 
 //-Actions
 //-breadcrumb actions
 
 const selectStep = (index: number) => {
-  console.log(index)
   if (store.state.steps[index].selectable) {
     store.commit('SET_CURRENT_STEP', index)
   }
@@ -70,8 +56,8 @@ const selectStep = (index: number) => {
 //--CalendarTab actions
 
 const setStepValue = (payload: { value: any; index: number }) => {
-  console.log(payload)
   store.commit('SET_STEP_VALUE', payload)
+  store.dispatch('loadConfigs')
 }
 
 //--ScheduleTab actions
@@ -80,7 +66,6 @@ const changeScheduleState = (indexes: { time: number; index: number }) => {
   store.dispatch('checkScheduleStep')
 }
 const updateFilter = (monitors: Array<{ name: string; value: number; disabled: boolean }>) => {
-  console.log(monitors)
   store.dispatch('updateFilter', monitors)
 }
 </script>
@@ -107,6 +92,9 @@ const updateFilter = (monitors: Array<{ name: string; value: number; disabled: b
             :step-id="1"
             :title="store.state.steps[0].title"
             :icon="store.state.steps[0].icon"
+            :unavailable-dates="store.state.steps[0].parameters.disabledDates"
+            :min-date="store.state.steps[0].parameters.minDate"
+            :max-date="store.state.steps[0].parameters.maxDate"
             @set-date="setStepValue"
             class="animate"
           />
