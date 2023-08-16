@@ -108,6 +108,7 @@ const updateFilter = (monitors: Array<{ name: string; value: number; disabled: b
             :icon="store.state.steps[1].icon"
             @change-schedule-state="changeScheduleState"
             @update-filter="updateFilter"
+            @validate-schedule="setStepValue"
             class="animate"
           />
         </div>

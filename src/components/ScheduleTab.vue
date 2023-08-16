@@ -22,6 +22,8 @@ export default {
           filtred: boolean
           scheduleFiltred: boolean
           monitors: Array<Number>
+          begin: string
+          end: string
         }>
         name: String
       }>,
@@ -83,7 +85,15 @@ export default {
     }
 
     const submitDatas = () => {
-      console.log('submit')
+      const datas = new Array()
+      props.schedulesList.forEach((time) => {
+        time.times.forEach((schedule) => {
+          if (schedule.selected) {
+            datas.push({ hour: schedule.hour, begin: schedule.begin, end: schedule.end })
+          }
+        })
+      })
+      emit('validateSchedule', { index: 1, value: datas })
     }
     return {
       ...props,

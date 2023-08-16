@@ -277,11 +277,14 @@ export default new Vuex.Store({
                     // console.log("schedule: ", schedule)
                     return {
                       hour: (response.data.creneau_config.show_end_hour) ? schedule.hour.start + " - " + schedule.hour.end : schedule.hour.start,
+                      begin: schedule.hour.start,
+                      end: schedule.hour.end,
                       active: schedule.active,
                       monitors: schedule.monitors,
                       selected: false,
                       scheduleFiltred: false,
                       filtred: false
+
                     }
                   }
                   )
