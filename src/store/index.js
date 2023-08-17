@@ -5,16 +5,15 @@ export default new Vuex.Store({
   state: {
     currentStep: 0,
     steps: stepsList,
-    configId: "",
+    configId: '',
     userState: {
       canSelect: !(stepsList[1].datas.schedulesCount >= stepsList[1].parameters.maxSchedules)
     }
   },
   mutations: {
-
     /**
-     * Permet de mettre à jour l'id de la configuration à récupérer 
-     * @param {String} id 
+     * Permet de mettre à jour l'id de la configuration à récupérer
+     * @param {String} id
      */
     SET_CONFIG_ID(state, id) {
       state.configId = id
@@ -34,15 +33,19 @@ export default new Vuex.Store({
           state.steps[index].selectable = true
         }
       }
+      if (state.currentStep == 1) {
+        state.steps[1].datas.schedulesCount = 0;
+        state.steps[1].datas.selectedSchedules = [];
+      }
     },
 
     /**
-     * Mets à jours les paramètre d'une étape  
-     * @param {{index: number, parameters: {any}} payload 
+     * Mets à jours les paramètre d'une étape
+     * @param {{index: number, parameters: {any}} payload
      */
     SET_STEP_SETTINGS(state, payload) {
-      state.steps[payload.index].parameters = payload.parameters;
-      console.log(payload);
+      state.steps[payload.index].parameters = payload.parameters
+      console.log(payload)
     },
     /**
      *
@@ -114,16 +117,30 @@ export default new Vuex.Store({
      * @param {{index: number, state: boolean}} payload
      */
     SET_MONITOR_STATE(state, payload) {
+      console.log("debug: ", payload)
       state.steps[1].parameters.monitorList[payload.index].disabled = payload.state
     }
   },
   getters: {
     getBookResume(state) {
+      let index = 0
       return state.steps.map((step) => {
+        let value = '';
+        switch (index) {
+          case 0:
+            value = step.datas.value.id
+            break;
+          case 1:
+            value = step.datas.value.map(schedule => schedule.hour)
+            break;
+          default:
+            value = step.datas.value
+            break;
+        }
         return {
           icon: step.icon,
           name: step.name,
-          data: step.datas.value
+          value: value
         }
       })
     }
@@ -175,10 +192,12 @@ export default new Vuex.Store({
       const schedulesList = state.steps[1].parameters.schedulesList
 
       //handling each monitors
+      console.log(selectedSchedules);
       state.steps[1].parameters.monitorList.forEach((monitor) => {
         let monitorState = false
         if (selectedSchedules.length) {
           selectedSchedules.forEach((schIndex) => {
+            console.log(schedulesList);
             const schedule = schedulesList[schIndex.time].times[schIndex.index]
             //Disable the monitor filter if necessary
             if (!schedule.monitors.includes(monitor.value)) {
@@ -234,7 +253,7 @@ export default new Vuex.Store({
      */
     loadConfigs({ state, commit }) {
       // use dGet to enable authentication
-      var parameters = {};
+      var parameters = {}
       switch (state.currentStep) {
         case 0:
           config
@@ -246,66 +265,71 @@ export default new Vuex.Store({
               parameters.maxDate = new Date(response.data.date_end)
               parameters.disabledWeekDays = {
                 repeat: {
-                  every: "weeks",
-                  weekdays: response.data.disabled_days.map(day => day + 1)
+                  every: 'weeks',
+                  weekdays: response.data.disabled_days.map((day) => day + 1)
                 }
               }
-              const periodes = response.data.disabled_dates_periode.map(period => {
-                console.log(period);
+              const periodes = response.data.disabled_dates_periode.map((period) => {
+                console.log(period)
                 return { start: new Date(period.value), end: new Date(period.end_value) }
               })
               console.log(periodes)
-              parameters.disabledDates = [...response.data.disabled_dates.map(date => new Date(date)), ...periodes]
-              commit("SET_STEP_SETTINGS", { index: 0, parameters })
-              commit("SET_CONFIG_ID", response.data.booking_config_type_id)
-              state.steps[1].url += response.data.booking_config_type_id + "/"
+              parameters.disabledDates = [
+                ...response.data.disabled_dates.map((date) => new Date(date)),
+                ...periodes
+              ]
+              commit('SET_STEP_SETTINGS', { index: 0, parameters })
+              commit('SET_CONFIG_ID', response.data.booking_config_type_id)
+              state.steps[1].url += response.data.booking_config_type_id + '/'
             })
             .catch((err) => {
-              console.log(err);
+              console.log(err)
             })
-          break;
+          break
         case 1:
           config
             .get(state.steps[1].url + state.steps[0].datas.value.id)
-            .then(response => {
-              parameters.monitorList = response.data.monitor_list
+            .then((response) => {
+              parameters.monitorList = response.data.monitor_list.map(monitor => {
+                return { ...monitor, value: monitor.value - 1 }
+              })
               parameters.maxSchedules = response.data.creneau_config.limit_reservation
-              parameters.schedulesList = response.data.schedules_list.map(period => {
+              parameters.schedulesList = response.data.schedules_list.map((period) => {
                 if (period.status) {
-                  const schedules = period.times.map(schedule => {
+                  const schedules = period.times.map((schedule) => {
                     // alert("good")
                     // console.log("schedule: ", schedule)
                     return {
-                      hour: (response.data.creneau_config.show_end_hour) ? schedule.hour.start + " - " + schedule.hour.end : schedule.hour.start,
+                      hour: response.data.creneau_config.show_end_hour
+                        ? schedule.hour.start + ' - ' + schedule.hour.end
+                        : schedule.hour.start,
                       begin: schedule.hour.start,
                       end: schedule.hour.end,
                       active: schedule.active,
-                      monitors: schedule.monitors,
+                      monitors: schedule.monitors.map(monitor => monitor - 1),
                       selected: false,
                       scheduleFiltred: false,
                       filtred: false
-
                     }
-                  }
-                  )
+                  })
                   return {
                     name: period.name,
                     times: schedules
                   }
                 }
               })
-              state.steps[1].parameters = parameters;
-
+              state.steps[1].parameters = parameters
+              state.userState.canSelect = true
             })
-            .catch(err => {
+            .catch((err) => {
               console.log(err)
             })
-          break;
+          break
         default:
-          break;
+          break
       }
-      console.log("parameters: ", parameters);
-      console.log(state);
+      console.log('parameters: ', parameters)
+      console.log(state)
     }
   },
   modules: {}

@@ -2,12 +2,14 @@
 import { useStore } from 'vuex'
 import CalendarTab from './components/CalendarTab.vue'
 import ScheduleTab from './components/ScheduleTab.vue'
+import DisplayInfo from './components/DisplayInfo.vue'
 import Breadcrumb from 'primevue/breadcrumb'
 import { computed } from 'vue'
 const store: {
   state: { steps: Array<any>; currentStep: number; userState: { canSelect: boolean } }
   dispatch: Function
   commit: Function
+  getters: { getBookResume: Function }
 } = useStore()
 
 store.dispatch('checkScheduleStep')
@@ -58,6 +60,8 @@ const selectStep = (index: number) => {
 const setStepValue = (payload: { value: any; index: number }) => {
   store.commit('SET_STEP_VALUE', payload)
   store.dispatch('loadConfigs')
+  // store.dispatch('updateFilter', [])
+  // store.dispatch('checkScheduleStep')
 }
 
 //--ScheduleTab actions
@@ -110,6 +114,13 @@ const updateFilter = (monitors: Array<{ name: string; value: number; disabled: b
             @update-filter="updateFilter"
             @validate-schedule="setStepValue"
             class="animate"
+          />
+          <DisplayInfo
+            v-if="store.state.currentStep == 2"
+            v-bind="store.state.steps[2].parameters"
+            :index="store.state.steps[2].index"
+            :step_title="store.state.steps[2].title"
+            :steps="store.getters.getBookResume"
           />
         </div>
       </div>
