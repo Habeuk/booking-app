@@ -6,6 +6,7 @@ import ProgressBar from 'primevue/progressbar'
 
 import { ref, computed } from 'vue'
 export default {
+  name: 'ScheduleTabe',
   props: {
     title: String,
     icon: String,
@@ -71,6 +72,10 @@ export default {
       return { label: difference + '/' + props.maxSchedules, percentage: percentage, color: color }
     })
 
+    const canSubmit = computed(() => {
+      return props.selectedSchedules ? true : false
+    })
+
     //Functions
     const selectSchedule = (time: number, index: number) => {
       if (props.schedulesList[time].times[index].active) {
@@ -85,20 +90,24 @@ export default {
     }
 
     const submitDatas = () => {
-      const datas = new Array()
-      props.schedulesList.forEach((time) => {
-        time.times.forEach((schedule) => {
-          if (schedule.selected) {
-            datas.push({ hour: schedule.hour, begin: schedule.begin, end: schedule.end })
-          }
+      if (props.selectedSchedules) {
+        console.log('length: ', props.selectedSchedules)
+        const datas = new Array()
+        props.schedulesList.forEach((time) => {
+          time.times.forEach((schedule) => {
+            if (schedule.selected) {
+              datas.push({ hour: schedule.hour, begin: schedule.begin, end: schedule.end })
+            }
+          })
         })
-      })
-      emit('validateSchedule', { index: 1, value: datas })
+        emit('validateSchedule', { index: 1, value: datas })
+      }
     }
     return {
       ...props,
       selectionLeft,
       localMonitor,
+      canSubmit,
       selectSchedule,
       submitDatas,
       updateFilter
@@ -168,6 +177,7 @@ export default {
         <div class="hours-action w-100 mx-auto justify-content-end d-flex">
           <div class="btn-container pr-0">
             <pButton
+              :disabled="!canSubmit"
               @click="submitDatas"
               class="ml-n3 w-100 mx-auto submit-btn"
               icon="pi pi-arrow-right"

@@ -13,32 +13,44 @@ export default {
     unavailableDates: {
       type: Array,
       default: null
+    },
+    currentDate: {
+      type: [Date, String],
+      required: true,
+      default: new Date()
     }
   },
   emits: ['setDate'],
   setup(props, { emit }) {
-    const date = ref(new Date())
-    date.value.setDate(date.value.getDate() + 1)
+    const selectedDate = ref(null)
+    // date.value.setDate(date.value.getDate() + 1)
     const disabledDates = computed(() => {
       return props.unavailableDates
     })
     console.log(disabledDates.value)
-    const attr = ref([
-      {
-        locale: 'fr'
-      }
-    ])
+    const attr = computed(() => {
+      return [
+        {
+          locale: 'fr',
+          highlight: true,
+          dates: new Date(props.currentDate)
+        }
+      ]
+    })
     const onSelect = (day: { date: Date }) => {
       // attr.value[0].dates = day.endDate
       if (!day.isDisabled) {
-        date.value = day.date
-        emit('setDate', { value: { value: date.value, id: day.id }, index: 0 })
+        // date.value = day.date
+        console.log(attr.value)
+        // attr.value[0].dates = day
+        emit('setDate', { value: { value: day.value, id: day.id }, index: 0 })
       }
     }
 
     return {
       ...props,
       attr,
+      selectedDate,
       disabledDates,
       onSelect
     }
@@ -57,6 +69,7 @@ export default {
       <span>{{ title }}</span>
     </h6>
     <VCalendar
+      v-model="selectedDate"
       :attributes="attr"
       :disabled-dates="disabledDates"
       :min-date="minDate"

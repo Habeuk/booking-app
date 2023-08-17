@@ -72,6 +72,11 @@ const changeScheduleState = (indexes: { time: number; index: number }) => {
 const updateFilter = (monitors: Array<{ name: string; value: number; disabled: boolean }>) => {
   store.dispatch('updateFilter', monitors)
 }
+
+//--ResumedTab Actions
+const setReservation = () => {
+  store.dispatch('setReservation')
+}
 </script>
 
 <template>
@@ -93,6 +98,7 @@ const updateFilter = (monitors: Array<{ name: string; value: number; disabled: b
           <CalendarTab
             v-if="store.state.currentStep == 0"
             :is-loading="false"
+            :current-date="store.state.steps[0].datas.value.id"
             :step-id="1"
             :title="store.state.steps[0].title"
             :icon="store.state.steps[0].icon"
@@ -121,6 +127,7 @@ const updateFilter = (monitors: Array<{ name: string; value: number; disabled: b
             :index="store.state.steps[2].index"
             :step_title="store.state.steps[2].title"
             :steps="store.getters.getBookResume"
+            @set-reservation="setReservation"
           />
         </div>
       </div>

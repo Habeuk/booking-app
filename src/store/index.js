@@ -36,6 +36,7 @@ export default new Vuex.Store({
       if (state.currentStep == 1) {
         state.steps[1].datas.schedulesCount = 0;
         state.steps[1].datas.selectedSchedules = [];
+        state.steps[1].datas.selectedMonitor = null
       }
     },
 
@@ -124,26 +125,45 @@ export default new Vuex.Store({
   getters: {
     getBookResume(state) {
       let index = 0
-      return state.steps.map((step) => {
-        let value = '';
-        switch (index) {
-          case 0:
-            value = step.datas.value.id
-            break;
-          case 1:
-            value = step.datas.value.map(schedule => schedule.begin + "<br/>-<br/>" + schedule.end)
-            break;
-          default:
-            value = step.datas.value
-            break;
+      return [...state.steps.map((step) => {
+        if (index < 2) {
+
+          let value = '';
+          switch (index) {
+            case 0:
+              value = step.datas.value.id
+              break;
+            case 1:
+              value = step.datas.value.map(schedule => {
+
+                return {
+                  label: schedule.begin + "<br/>-<br/>" + schedule.end,
+                  begin: schedule.begin,
+                  end: schedule.end
+                }
+              }
+              )
+              break;
+            default:
+              value = step.datas.value
+              break;
+          }
+          index += 1;
+          return {
+            icon: step.icon,
+            name: step.resumedLabel,
+            value: value
+          }
         }
         index += 1;
-        return {
-          icon: step.icon,
-          name: step.name,
-          value: value
-        }
-      })
+      }).filter(element => typeof (element) !== 'undefined'),
+      {
+        icon: "pi pi-user",
+        name: "Moniteur",
+        monitor: (state.steps[1].datas.selectedMonitor) ? state.steps[1].datas.selectedMonitor : state.steps[1].parameters.monitorList.find(element => !element.disabled),
+        value: (state.steps[1].datas.selectedMonitor) ? state.steps[1].datas.selectedMonitor.name : state.steps[1].parameters.monitorList.find(element => !element.disabled).name
+      }
+      ]
     }
   },
   actions: {
@@ -162,9 +182,12 @@ export default new Vuex.Store({
           schedule.filtred = true
           if (!monitors.length) {
             commit('SET_FILTER_STATE', { time, index, value: false })
+            state.steps[1].datas.selectedMonitor = null
           }
           let filtred = false
+
           monitors.forEach((monitorValue) => {
+            state.steps[1].datas.selectedMonitor = monitorValue
             if (!filtred && !schedule.monitors.includes(monitorValue.value)) {
               schedule.filtred = false
               filtred = true
@@ -281,8 +304,10 @@ export default new Vuex.Store({
                 ...periodes,
               ]
               commit('SET_STEP_SETTINGS', { index: 0, parameters })
+              state.steps[0].datas.value = { id: parameters.minDate }
               commit('SET_CONFIG_ID', response.data.booking_config_type_id)
               state.steps[1].url += response.data.booking_config_type_id + '/'
+              state.steps[2].url += response.data.booking_config_type_id + '/'
             })
             .catch((err) => {
               console.log(err)
@@ -332,6 +357,29 @@ export default new Vuex.Store({
       }
       console.log('parameters: ', parameters)
       console.log(state)
+    },
+    setReservation({ state, getters }) {
+      console.log(getters.getBookResume)
+      const formFilled = getters.getBookResume
+      const data = {
+        creneaux: formFilled[1].value.map(schedule => {
+          return {
+            hour_start: schedule.begin,
+            hour_end: schedule.end,
+            equipe: formFilled[2].monitor,
+            date_start: formFilled[0].value,
+            date_end: formFilled[0].value
+          }
+        }),
+      }
+      config
+        .post(state.steps[1].url, data)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(err => {
+          console.log(err);
+        })
     }
   },
   modules: {}

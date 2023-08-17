@@ -4,8 +4,9 @@ export const stepsList = [
     index: 0,
     name: 'calendar',
     title: 'Veuillez sélectionner le jour de réservation',
+    resumedLabel: 'Date Selectionnée',
     icon: 'pi pi-calendar',
-    url: "/booking-system/views-app-calendar/",
+    url: '/booking-system/views-app-calendar/',
     selectable: true,
     isLoading: true,
     parameters: {
@@ -14,7 +15,9 @@ export const stepsList = [
       initialPage: { month: 8, year: 2022 }
     },
     datas: {
-      value: null
+      value: {
+        id: new Date()
+      }
     }
   },
   {
@@ -22,7 +25,8 @@ export const stepsList = [
     name: 'schedule',
     title: 'veuillez selectionner les différentes plages horaires',
     icon: 'pi pi-clock',
-    url: "/booking-system/views-app-creneaux/",
+    url: '/booking-system/views-app-creneaux/',
+    resumedLabel: 'Créneaux Selectionnés',
     selectable: false,
     isLoading: true,
     parameters: {
@@ -122,11 +126,16 @@ export const stepsList = [
   {
     index: 2,
     name: 'Résumé',
+    title: 'Bilan de la commande',
     icon: 'pi pi-server',
     selectable: false,
     isLoading: false,
+    url: "/booking-system/save-reservation/",
     datas: {
       value: null
+    },
+    parameters: {
+      callToAction: 'Book now'
     }
   }
 ]
