@@ -35,7 +35,7 @@ export default {
 <template>
   <div>
     <div class="myi-5">
-      <h6 class="title-steps">
+      <h6 class="title-steps h2 font-weight-bold">
         <span class="ts-icon">
           <span :class="icon" class="mr-2"></span>
         </span>

@@ -373,7 +373,7 @@ export default new Vuex.Store({
         }),
       }
       config
-        .post(state.steps[1].url, data)
+        .post(state.steps[2].url, data)
         .then(response => {
           console.log(response)
         })
