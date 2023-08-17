@@ -131,12 +131,13 @@ export default new Vuex.Store({
             value = step.datas.value.id
             break;
           case 1:
-            value = step.datas.value.map(schedule => schedule.hour)
+            value = step.datas.value.map(schedule => schedule.begin + "<br/>-<br/>" + schedule.end)
             break;
           default:
             value = step.datas.value
             break;
         }
+        index += 1;
         return {
           icon: step.icon,
           name: step.name,
@@ -263,20 +264,21 @@ export default new Vuex.Store({
               parameters.local = response.data.language
               parameters.minDate = new Date(response.data.date_begin)
               parameters.maxDate = new Date(response.data.date_end)
-              parameters.disabledWeekDays = {
+              parameters.disabledDates = [{
                 repeat: {
                   every: 'weeks',
                   weekdays: response.data.disabled_days.map((day) => day + 1)
                 }
-              }
+              }]
               const periodes = response.data.disabled_dates_periode.map((period) => {
                 console.log(period)
                 return { start: new Date(period.value), end: new Date(period.end_value) }
               })
               console.log(periodes)
               parameters.disabledDates = [
+                ...parameters.disabledDates,
                 ...response.data.disabled_dates.map((date) => new Date(date)),
-                ...periodes
+                ...periodes,
               ]
               commit('SET_STEP_SETTINGS', { index: 0, parameters })
               commit('SET_CONFIG_ID', response.data.booking_config_type_id)

@@ -2146,14 +2146,15 @@ const Rd = {
       switch (e.currentStep) {
         case 0:
           So.get(e.steps[0].url).then((r) => {
-            console.log(r.data.disabled_date), n.local = r.data.language, n.minDate = new Date(r.data.date_begin), n.maxDate = new Date(r.data.date_end), n.disabledWeekDays = {
+            console.log(r.data.disabled_date), n.local = r.data.language, n.minDate = new Date(r.data.date_begin), n.maxDate = new Date(r.data.date_end), n.disabledDates = [{
               repeat: {
                 every: "weeks",
                 weekdays: r.data.disabled_days.map((i) => i + 1)
               }
-            };
+            }];
             const a = r.data.disabled_dates_periode.map((i) => (console.log(i), { start: new Date(i.value), end: new Date(i.end_value) }));
             console.log(a), n.disabledDates = [
+              ...n.disabledDates,
               ...r.data.disabled_dates.map((i) => new Date(i)),
               ...a
             ], t("SET_STEP_SETTINGS", { index: 0, parameters: n }), t("SET_CONFIG_ID", r.data.booking_config_type_id), e.steps[1].url += r.data.booking_config_type_id + "/";
