@@ -8,11 +8,12 @@ export default {
   props: {
     index: Number,
     steps: {
-      type: Array<{ name: string; value: Array<string> | string }>,
+      type: Array<{ name: string; icon: string; value: Array<string> | string }>,
       required: true
     },
     callToAction: String,
-    step_title: String
+    step_title: String,
+    icon: String
   },
   emits: ['setReservation'],
   setup(props, { emit }) {
@@ -37,7 +38,7 @@ export default {
     <div class="myi-5">
       <h6 class="title-steps h2 font-weight-bold">
         <span class="ts-icon">
-          <span :class="icon" class="mr-2"></span>
+          <div :class="icon" class="h2 mr-2 d-inline-block"></div>
         </span>
         {{ step_title }}
       </h6>

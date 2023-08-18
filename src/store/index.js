@@ -1,4 +1,4 @@
-import { stepsList } from './app-configs'
+import { stepsList } from './store-configs'
 import Vuex from 'vuex'
 import config from '../rootConfig'
 export default new Vuex.Store({
@@ -12,13 +12,33 @@ export default new Vuex.Store({
   },
   mutations: {
     /**
+     * Reset application 
+     */
+    RESET_APP(state) {
+      state.currentStep = 0
+      state.steps[0].datas.value = { id: new Date() };
+      for (let index = 1; index < state.steps.length; index++) {
+        state.steps[index].datas.value = null;
+        state.steps[index].selectable = false;
+      }
+      state.steps[1].datas.schedulesCount = 0
+      state.steps[1].datas.selectedSchedules = []
+      state.steps[1].datas.selectedMonitor = null
+    },
+    /**
      * Permet de mettre à jour l'id de la configuration à récupérer
      * @param {String} id
-     */
+    */
     SET_CONFIG_ID(state, id) {
       state.configId = id
     },
-
+    /**
+     * definit l'url pour les paths 
+     * @param {{index: number, url: string}} payload 
+     */
+    SET_STEP_URL(state, payload) {
+      state.steps[payload.index].url = payload.url + "/"
+    },
     /**
      *
      * @param {{value: any, index: number}} payload
@@ -43,7 +63,7 @@ export default new Vuex.Store({
 
     /**
      * Mets à jours les paramètre d'une étape
-     * @param {{index: number, parameters: {any}} payload
+     * @param {index: number, parameters: {any}} payload
      */
     SET_STEP_SETTINGS(state, payload) {
       state.steps[payload.index].parameters = payload.parameters
@@ -314,9 +334,11 @@ export default new Vuex.Store({
               state.steps[0].datas.value = { id: parameters.minDate }
               commit('SET_CONFIG_ID', response.data.booking_config_type_id)
               state.steps[0].isLoading = false
-              state.steps[1].url += response.data.booking_config_type_id + '/'
-              state.steps[2].url += response.data.booking_config_type_id + '/'
-
+              console.log("look at this : ", state.steps[1].url.split('/').reverse()[1]);
+              if (state.steps[1].url.split('/').reverse()[1] != response.data.booking_config_type_id) {
+                state.steps[1].url += response.data.booking_config_type_id + '/'
+                state.steps[2].url += response.data.booking_config_type_id + '/'
+              }
             })
             .catch((err) => {
               console.log(err)
@@ -357,7 +379,6 @@ export default new Vuex.Store({
               state.steps[1].isLoading = false
               state.steps[1].parameters = parameters
               state.userState.canSelect = true
-
             })
             .catch((err) => {
               console.log(err)
@@ -370,6 +391,7 @@ export default new Vuex.Store({
       console.log(state)
     },
     setReservation({ state, getters }) {
+      this.commit("SET_STEP_VALUE", { index: 2, value: null })
       console.log(getters.getBookResume)
       const formFilled = getters.getBookResume
       const data = {
@@ -387,9 +409,13 @@ export default new Vuex.Store({
         .post(state.steps[2].url, data)
         .then((response) => {
           console.log(response)
+          state.steps[3].isLoading = false
+          state.steps[3].parameters.reportState = true
+
         })
-        .catch((err) => {
-          console.log(err)
+        .catch(() => {
+          state.steps[3].isLoading = false
+          state.steps[3].parameters.reportState = false
         })
     }
   },

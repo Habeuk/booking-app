@@ -4,6 +4,7 @@ import CalendarTab from './components/CalendarTab.vue'
 import ScheduleTab from './components/ScheduleTab.vue'
 import DisplayInfo from './components/DisplayInfo.vue'
 import Breadcrumb from 'primevue/breadcrumb'
+import ShowReport from './components/ShowReport.vue'
 import { computed } from 'vue'
 const store: {
   state: {
@@ -58,6 +59,11 @@ const getSteps = computed(() => {
 //**********functions**********//
 
 //-Actions
+const resetApp = () => {
+  store.commit('RESET_APP')
+  store.dispatch('loadConfigs')
+}
+
 //-breadcrumb actions
 
 const selectStep = (index: number) => {
@@ -94,7 +100,7 @@ const setReservation = () => {
   <div class="main-app-container container">
     <div class="main-app w-100 d-flex">
       <div class="app-main-contain px-md-5 px-2 mx-auto mt-5 mh-50">
-        <div class="px-5">
+        <div v-if="store.state.currentStep < 3" class="px-5">
           <div>
             <Breadcrumb class="booking-breadcrumb mb-4" :model="getSteps">
               <template #item="{ item }">
@@ -136,9 +142,17 @@ const setReservation = () => {
             v-if="store.state.currentStep == 2"
             v-bind="store.state.steps[2].parameters"
             :index="store.state.steps[2].index"
+            :icon="store.state.steps[2].icon"
             :step_title="store.state.steps[2].title"
             :steps="store.getters.getBookResume"
             @set-reservation="setReservation"
+          />
+        </div>
+        <div v-else>
+          <ShowReport
+            :is-loading="store.state.steps[3].isLoading"
+            v-bind="store.state.steps[3].parameters"
+            @reset-app="resetApp"
           />
         </div>
       </div>

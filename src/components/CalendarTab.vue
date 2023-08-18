@@ -37,7 +37,7 @@ export default {
         }
       ]
     })
-    const onSelect = (day: { date: Date }) => {
+    const onSelect = (day: { isDisabled: boolean; value: any; id: any }) => {
       // attr.value[0].dates = day.endDate
       if (!day.isDisabled) {
         // date.value = day.date
@@ -69,7 +69,6 @@ export default {
       <span>{{ title }}</span>
     </h6>
     <VCalendar
-      v-model="selectedDate"
       :attributes="attr"
       :disabled-dates="disabledDates"
       :min-date="minDate"

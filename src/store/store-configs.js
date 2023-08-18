@@ -137,5 +137,19 @@ export const stepsList = [
     parameters: {
       callToAction: 'Book now'
     }
+  },
+  {
+    index: 3,
+    name: 'Rapport',
+    title: "",
+    icon: "",
+    isLoading: true,
+    parameters: {
+      reportState: false,
+      reportSuccess: { resumed: "yay, everything is working.", message: "Success" },
+      reportError: { resumed: "oh no, something went wrong.", message: "Error" },
+      btnLabel: "Book again"
+    },
+    datas: {}
   }
 ]
