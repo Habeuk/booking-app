@@ -6,7 +6,20 @@ import DisplayInfo from './components/DisplayInfo.vue'
 import Breadcrumb from 'primevue/breadcrumb'
 import { computed } from 'vue'
 const store: {
-  state: { steps: Array<any>; currentStep: number; userState: { canSelect: boolean } }
+  state: {
+    steps: Array<{
+      name: string
+      index: number
+      icon: string
+      selectable: boolean
+      isLoading: boolean
+      datas: any
+      title: string
+      parameters: any
+    }>
+    currentStep: number
+    userState: { canSelect: boolean }
+  }
   dispatch: Function
   commit: Function
   getters: { getBookResume: Function }
@@ -17,30 +30,28 @@ store.dispatch('loadConfigs')
 
 //computed
 const getSteps = computed(() => {
-  const datas = store.state.steps.map(
-    (step: { name: string; index: number; icon: string; selectable: boolean }) => {
-      const active = step.index == store.state.currentStep
-      let classes = active ? 'active-step' : 'inactive-step'
-      if (step.index < store.state.currentStep) {
-        classes = 'passed-step'
-      }
-      if (!step.selectable) {
-        classes += ' disabled'
-      }
-      if (step.selectable) {
-        classes += ' selectable'
-      }
-      return {
-        label: step.name,
-        index: step.index,
-        icon: step.icon,
-        separator: true,
-        selectable: step.selectable,
-        class: classes,
-        displayName: step.index < store.state.currentStep
-      }
+  const datas = store.state.steps.map((step) => {
+    const active = step.index == store.state.currentStep
+    let classes = active ? 'active-step' : 'inactive-step'
+    if (step.index < store.state.currentStep) {
+      classes = 'passed-step'
     }
-  )
+    if (!step.selectable) {
+      classes += ' disabled'
+    }
+    if (step.selectable) {
+      classes += ' selectable'
+    }
+    return {
+      label: step.name,
+      index: step.index,
+      icon: step.icon,
+      separator: true,
+      selectable: step.selectable,
+      class: classes,
+      displayName: step.index < store.state.currentStep
+    }
+  })
   return datas
 })
 
@@ -97,7 +108,7 @@ const setReservation = () => {
           </div>
           <CalendarTab
             v-if="store.state.currentStep == 0"
-            :is-loading="false"
+            :is-loading="store.state.steps[0].isLoading"
             :current-date="store.state.steps[0].datas.value.id"
             :step-id="1"
             :title="store.state.steps[0].title"
@@ -112,7 +123,7 @@ const setReservation = () => {
             v-if="store.state.currentStep == 1"
             v-bind="store.state.steps[1].parameters"
             :can-select="store.state.userState.canSelect"
-            :is-loading="false"
+            :is-loading="store.state.steps[1].isLoading"
             :selected-schedules="store.state.steps[1].datas.schedulesCount"
             :title="store.state.steps[1].title"
             :icon="store.state.steps[1].icon"

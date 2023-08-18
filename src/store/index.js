@@ -29,13 +29,14 @@ export default new Vuex.Store({
       state.steps[payload.index].selectable = true
       for (let index = payload.index + 1; index < state.steps.length; index++) {
         state.steps[index].selectable = false
+        state.steps[index].isLoading = true
         if (state.steps[index - 1].datas.value) {
           state.steps[index].selectable = true
         }
       }
       if (state.currentStep == 1) {
-        state.steps[1].datas.schedulesCount = 0;
-        state.steps[1].datas.selectedSchedules = [];
+        state.steps[1].datas.schedulesCount = 0
+        state.steps[1].datas.selectedSchedules = []
         state.steps[1].datas.selectedMonitor = null
       }
     },
@@ -118,51 +119,55 @@ export default new Vuex.Store({
      * @param {{index: number, state: boolean}} payload
      */
     SET_MONITOR_STATE(state, payload) {
-      console.log("debug: ", payload)
+      console.log('debug: ', payload)
       state.steps[1].parameters.monitorList[payload.index].disabled = payload.state
     }
   },
   getters: {
     getBookResume(state) {
       let index = 0
-      return [...state.steps.map((step) => {
-        if (index < 2) {
-
-          let value = '';
-          switch (index) {
-            case 0:
-              value = step.datas.value.id
-              break;
-            case 1:
-              value = step.datas.value.map(schedule => {
-
-                return {
-                  label: schedule.begin + "<br/>-<br/>" + schedule.end,
-                  begin: schedule.begin,
-                  end: schedule.end
-                }
+      return [
+        ...state.steps
+          .map((step) => {
+            if (index < 2) {
+              let value = ''
+              switch (index) {
+                case 0:
+                  value = step.datas.value.id
+                  break
+                case 1:
+                  value = step.datas.value.map((schedule) => {
+                    return {
+                      label: schedule.begin + '<br/>-<br/>' + schedule.end,
+                      begin: schedule.begin,
+                      end: schedule.end
+                    }
+                  })
+                  break
+                default:
+                  value = step.datas.value
+                  break
               }
-              )
-              break;
-            default:
-              value = step.datas.value
-              break;
-          }
-          index += 1;
-          return {
-            icon: step.icon,
-            name: step.resumedLabel,
-            value: value
-          }
+              index += 1
+              return {
+                icon: step.icon,
+                name: step.resumedLabel,
+                value: value
+              }
+            }
+            index += 1
+          })
+          .filter((element) => typeof element !== 'undefined'),
+        {
+          icon: 'pi pi-user',
+          name: 'Moniteur',
+          monitor: state.steps[1].datas.selectedMonitor
+            ? state.steps[1].datas.selectedMonitor
+            : state.steps[1].parameters.monitorList.find((element) => !element.disabled),
+          value: state.steps[1].datas.selectedMonitor
+            ? state.steps[1].datas.selectedMonitor.name
+            : state.steps[1].parameters.monitorList.find((element) => !element.disabled).name
         }
-        index += 1;
-      }).filter(element => typeof (element) !== 'undefined'),
-      {
-        icon: "pi pi-user",
-        name: "Moniteur",
-        monitor: (state.steps[1].datas.selectedMonitor) ? state.steps[1].datas.selectedMonitor : state.steps[1].parameters.monitorList.find(element => !element.disabled),
-        value: (state.steps[1].datas.selectedMonitor) ? state.steps[1].datas.selectedMonitor.name : state.steps[1].parameters.monitorList.find(element => !element.disabled).name
-      }
       ]
     }
   },
@@ -216,12 +221,12 @@ export default new Vuex.Store({
       const schedulesList = state.steps[1].parameters.schedulesList
 
       //handling each monitors
-      console.log(selectedSchedules);
+      console.log(selectedSchedules)
       state.steps[1].parameters.monitorList.forEach((monitor) => {
         let monitorState = false
         if (selectedSchedules.length) {
           selectedSchedules.forEach((schIndex) => {
-            console.log(schedulesList);
+            console.log(schedulesList)
             const schedule = schedulesList[schIndex.time].times[schIndex.index]
             //Disable the monitor filter if necessary
             if (!schedule.monitors.includes(monitor.value)) {
@@ -287,12 +292,14 @@ export default new Vuex.Store({
               parameters.local = response.data.language
               parameters.minDate = new Date(response.data.date_begin)
               parameters.maxDate = new Date(response.data.date_end)
-              parameters.disabledDates = [{
-                repeat: {
-                  every: 'weeks',
-                  weekdays: response.data.disabled_days.map((day) => day + 1)
+              parameters.disabledDates = [
+                {
+                  repeat: {
+                    every: 'weeks',
+                    weekdays: response.data.disabled_days.map((day) => day + 1)
+                  }
                 }
-              }]
+              ]
               const periodes = response.data.disabled_dates_periode.map((period) => {
                 console.log(period)
                 return { start: new Date(period.value), end: new Date(period.end_value) }
@@ -301,13 +308,15 @@ export default new Vuex.Store({
               parameters.disabledDates = [
                 ...parameters.disabledDates,
                 ...response.data.disabled_dates.map((date) => new Date(date)),
-                ...periodes,
+                ...periodes
               ]
               commit('SET_STEP_SETTINGS', { index: 0, parameters })
               state.steps[0].datas.value = { id: parameters.minDate }
               commit('SET_CONFIG_ID', response.data.booking_config_type_id)
+              state.steps[0].isLoading = false
               state.steps[1].url += response.data.booking_config_type_id + '/'
               state.steps[2].url += response.data.booking_config_type_id + '/'
+
             })
             .catch((err) => {
               console.log(err)
@@ -317,7 +326,7 @@ export default new Vuex.Store({
           config
             .get(state.steps[1].url + state.steps[0].datas.value.id)
             .then((response) => {
-              parameters.monitorList = response.data.monitor_list.map(monitor => {
+              parameters.monitorList = response.data.monitor_list.map((monitor) => {
                 return { ...monitor, value: monitor.value - 1 }
               })
               parameters.maxSchedules = response.data.creneau_config.limit_reservation
@@ -333,7 +342,7 @@ export default new Vuex.Store({
                       begin: schedule.hour.start,
                       end: schedule.hour.end,
                       active: schedule.active,
-                      monitors: schedule.monitors.map(monitor => monitor - 1),
+                      monitors: schedule.monitors.map((monitor) => monitor - 1),
                       selected: false,
                       scheduleFiltred: false,
                       filtred: false
@@ -345,8 +354,10 @@ export default new Vuex.Store({
                   }
                 }
               })
+              state.steps[1].isLoading = false
               state.steps[1].parameters = parameters
               state.userState.canSelect = true
+
             })
             .catch((err) => {
               console.log(err)
@@ -362,7 +373,7 @@ export default new Vuex.Store({
       console.log(getters.getBookResume)
       const formFilled = getters.getBookResume
       const data = {
-        creneaux: formFilled[1].value.map(schedule => {
+        creneaux: formFilled[1].value.map((schedule) => {
           return {
             hour_start: schedule.begin,
             hour_end: schedule.end,
@@ -370,15 +381,15 @@ export default new Vuex.Store({
             date_start: formFilled[0].value,
             date_end: formFilled[0].value
           }
-        }),
+        })
       }
       config
         .post(state.steps[2].url, data)
-        .then(response => {
+        .then((response) => {
           console.log(response)
         })
-        .catch(err => {
-          console.log(err);
+        .catch((err) => {
+          console.log(err)
         })
     }
   },

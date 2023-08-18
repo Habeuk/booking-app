@@ -2,7 +2,7 @@
 @use '@stephane888/wbu-atomique/scss/wbu-ressources-clean.scss' as *;
 @use '@stephane888/wbu-atomique/scss/bootstrap-all.scss';
 @use './ScheduleComponent.scss';
-@use "./ResumedComponent.scss";
+@use './ResumedComponent.scss';
 
 html {
   font-size: 62.5%;
@@ -33,12 +33,15 @@ html {
     justify-content: center !important;
     background-color: $primary-color-estomped;
 
-    &>ol {
+    & > ol {
       width: 100%;
 
       li {
         flex: auto;
-        transition: $bg-transition, $color-transition, max-width 0.2s ease-in;
+        transition:
+          $bg-transition,
+          $color-transition,
+          max-width 0.2s ease-in;
 
         &.p-menuitem {
           .breadcrumb-icon::before {
@@ -70,7 +73,7 @@ html {
             color: white;
             background-color: $primary-color;
 
-            &+.p-menuitem-separator {
+            & + .p-menuitem-separator {
               svg {
                 color: white;
               }
@@ -82,7 +85,7 @@ html {
           }
 
           &.passed-step {
-            &+.p-menuitem-separator {
+            & + .p-menuitem-separator {
               background-color: $primary-color;
             }
           }

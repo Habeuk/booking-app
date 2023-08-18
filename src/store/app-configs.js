@@ -130,7 +130,7 @@ export const stepsList = [
     icon: 'pi pi-server',
     selectable: false,
     isLoading: false,
-    url: "/booking-system/save-reservation/",
+    url: '/booking-system/save-reservation/',
     datas: {
       value: null
     },
