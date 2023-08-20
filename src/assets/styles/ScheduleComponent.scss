@@ -1,88 +1,91 @@
 @use './variables.scss' as *;
 
-.hours-content {
-  text-align: left;
+// encapsule la css.
+.app-main-contain {
+  .hours-content {
+    text-align: left;
 
-  .time-title {
-    color: black;
-    text-transform: uppercase;
-    font-weight: bold;
-    margin-top: 20px;
-  }
+    .time-title {
+      color: black;
+      text-transform: uppercase;
+      font-weight: bold;
+      margin-top: 20px;
+    }
 
-  .time-list {
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 10px;
+    .time-list {
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 10px;
 
-    .active-btn {
-      transition:
-        background-color 0.5s,
-        color 0.5s;
+      .active-btn {
+        transition:
+          background-color 0.5s,
+          color 0.5s;
 
-      &:hover,
-      &.selected-btn {
-        background-color: $primary-color;
-        color: white;
+        &:hover,
+        &.selected-btn {
+          background-color: $wbu-color-primary;
+          color: white;
+        }
+      }
+
+      .desabled-btn {
+        background-color: rgba(205, 205, 205, 0.3);
       }
     }
 
-    .desabled-btn {
-      background-color: rgba(205, 205, 205, 0.3);
+    .time-btn {
+      min-width: 80px;
+      max-width: 140px;
+      padding: 12px 18px;
+      background: transparent;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      //font-size: $default-font-size;
+      border: 1px solid rgb(91, 91, 91);
+      transition:
+        border 0.4s,
+        background 0.3s,
+        box-shadow 0.3s,
+        color 0.3s;
+      font-weight: bold;
+      flex: 1 1 20%;
+      // margin-bottom: 15px;
+      max-height: 50px;
+      position: relative;
+
+      &:hover {
+        //background-color: rgba($primary-color, 0.2);
+        color: $wbu-color-primary;
+        border: 1px solid $wbu-color-primary;
+      }
+
+      &:focus,
+      &:active {
+        box-shadow: 0px 0px 6px $wbu-color-primary;
+        border-color: $wbu-color-primary;
+      }
+
+      .tt-discount {
+        padding: 7px 4px;
+        background-color: rgb(59, 58, 58);
+        color: white;
+        border-radius: 2px;
+        position: absolute;
+        bottom: -17px;
+        line-height: 1;
+        left: 50%;
+        width: 50%;
+        text-align: center;
+        transform: translateX(-50%);
+      }
     }
   }
 
-  .time-btn {
-    min-width: 80px;
-    max-width: 140px;
-    padding: 12px 18px;
-    background: transparent;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: $default-font-size;
-    border: 1px solid rgb(91, 91, 91);
-    transition:
-      border 0.4s,
-      background 0.3s,
-      box-shadow 0.3s,
-      color 0.3s;
-    font-weight: bold;
-    flex: 1 1 20%;
-    // margin-bottom: 15px;
-    max-height: 50px;
-    position: relative;
-
-    &:hover {
-      //background-color: rgba($primary-color, 0.2);
-      color: $primary-color;
-      border: 1px solid $primary-color;
-    }
-
-    &:focus,
-    &:active {
-      box-shadow: 0px 0px 6px $primary-color;
-      border-color: $primary-color;
-    }
-
-    .tt-discount {
-      padding: 7px 4px;
-      background-color: rgb(59, 58, 58);
-      color: white;
-      border-radius: 2px;
-      position: absolute;
-      bottom: -17px;
-      line-height: 1;
-      left: 50%;
-      width: 50%;
-      text-align: center;
-      transform: translateX(-50%);
-    }
+  .time-progress-bar {
+    height: 2px;
   }
-}
-
-.time-progress-bar {
-  height: 2px;
 }

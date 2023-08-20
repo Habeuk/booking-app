@@ -1,0 +1,26 @@
+@use '../styles/variables.scss' as *;
+/**
+ * Override PrimeVue 
+ * @see primevue-sass-theme/themes/lara/lara-light/_variables.scss
+ */
+// init
+$primaryColor: $wbu-color-primary;
+$primaryLightColor: #c7d2fe;
+$primaryDarkColor: #4f46e5;
+$primaryDarkerColor: #4338ca;
+$primaryTextColor: #ffffff;
+$highlightBg: #eef2ff;
+$highlightTextColor: $primaryDarkerColor;
+$highlightFocusBg: #e0e7ff;
+$primeIconFontSize: $wbu-default-font-size;
+
+//Global
+$fontFamily: inherit;
+$fontSize: $wbu-default-font-size;
+
+//inline message
+$inlineMessageMargin: 0;
+$inlineMessageIconFontSize: $fontSize;
+$inlineMessageTextFontSize: $fontSize;
+$inlineMessageBorderWidth: 0px;
+@import 'primevue-sass-theme/themes/lara/lara-light/_variables.scss';

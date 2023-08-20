@@ -4,4 +4,4 @@ export const save_data_selector = 'data-url-save'
 export const default_calendar_path = '/booking-system/views-app-calendar/'
 export const default_schedule_path = '/booking-system/views-app-creneaux/'
 export const default_save_path = '/booking-system/save-reservation/'
-export const app_id = "app"
+export const app_id = 'app'

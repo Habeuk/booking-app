@@ -6,7 +6,9 @@ export const stepsList = [
     title: 'Veuillez sélectionner le jour de réservation',
     resumedLabel: 'Date Selectionnée',
     icon: 'pi pi-calendar',
-    url: '/booking-system/views-app-calendar/',
+    // url: '/booking-system/views-app-calendar/',
+    // route provisoir
+    url: '/booking-system-auto/views-app-calendar',
     selectable: true,
     isLoading: true,
     parameters: {
@@ -141,14 +143,14 @@ export const stepsList = [
   {
     index: 3,
     name: 'Rapport',
-    title: "",
-    icon: "",
+    title: '',
+    icon: '',
     isLoading: true,
     parameters: {
       reportState: false,
-      reportSuccess: { resumed: "yay, everything is working.", message: "Success" },
-      reportError: { resumed: "oh no, something went wrong.", message: "Error" },
-      btnLabel: "Book again"
+      reportSuccess: { resumed: 'yay, everything is working.', message: 'Success' },
+      reportError: { resumed: 'oh no, something went wrong.', message: 'Error' },
+      btnLabel: 'Book again'
     },
     datas: {}
   }

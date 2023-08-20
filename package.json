@@ -20,6 +20,7 @@
     "drupal-vuejs": "file:../drupal-vuejs",
     "primeicons": "^6.0.1",
     "primevue": "^3.31.0",
+    "primevue-sass-theme": "file:../primevue-sass-themes",
     "v-calendar": "^3.0.3",
     "vue": "^3.3.4",
     "vuex": "^4.0.2"

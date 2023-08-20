@@ -4,6 +4,7 @@ import CalendarTab from './components/CalendarTab.vue'
 import ScheduleTab from './components/ScheduleTab.vue'
 import DisplayInfo from './components/DisplayInfo.vue'
 import Breadcrumb from 'primevue/breadcrumb'
+import InlineMessage from 'primevue/inlinemessage'
 import ShowReport from './components/ShowReport.vue'
 import { computed } from 'vue'
 const store: {
@@ -20,6 +21,8 @@ const store: {
     }>
     currentStep: number
     userState: { canSelect: boolean }
+    access: boolean
+    ban_reason: string
   }
   dispatch: Function
   commit: Function
@@ -98,7 +101,7 @@ const setReservation = () => {
 
 <template>
   <div class="main-app-container container">
-    <div class="main-app w-100 d-flex">
+    <div v-if="store.state.access" class="main-app w-100 d-flex">
       <div class="app-main-contain px-md-5 px-2 mx-auto mt-5 mh-50">
         <div v-if="store.state.currentStep < 3" class="px-5">
           <div>
@@ -155,6 +158,15 @@ const setReservation = () => {
             @reset-app="resetApp"
           />
         </div>
+      </div>
+    </div>
+    <div v-if="!store.state.access" class="main-app w-100 d-flex">
+      <div class="app-main-contain px-md-5 px-2 mx-auto mt-5 mh-50">
+        <InlineMessage severity="warn" class="border-primary w-full justify-content-start h3">
+          <div class="flex align-items-center">
+            <div v-html="store.state.ban_reason"></div>
+          </div>
+        </InlineMessage>
       </div>
     </div>
   </div>

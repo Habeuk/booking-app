@@ -8,18 +8,21 @@ export default new Vuex.Store({
     configId: '',
     userState: {
       canSelect: !(stepsList[1].datas.schedulesCount >= stepsList[1].parameters.maxSchedules)
-    }
+    },
+    //Permet de determiner si l'utilisateur a acces à l'App.
+    access: true,
+    ban_reason: ''
   },
   mutations: {
     /**
-     * Reset application 
+     * Reset application
      */
     RESET_APP(state) {
       state.currentStep = 0
-      state.steps[0].datas.value = { id: new Date() };
+      state.steps[0].datas.value = { id: new Date() }
       for (let index = 1; index < state.steps.length; index++) {
-        state.steps[index].datas.value = null;
-        state.steps[index].selectable = false;
+        state.steps[index].datas.value = null
+        state.steps[index].selectable = false
       }
       state.steps[1].datas.schedulesCount = 0
       state.steps[1].datas.selectedSchedules = []
@@ -28,16 +31,16 @@ export default new Vuex.Store({
     /**
      * Permet de mettre à jour l'id de la configuration à récupérer
      * @param {String} id
-    */
+     */
     SET_CONFIG_ID(state, id) {
       state.configId = id
     },
     /**
-     * definit l'url pour les paths 
-     * @param {{index: number, url: string}} payload 
+     * definit l'url pour les paths
+     * @param {{index: number, url: string}} payload
      */
     SET_STEP_URL(state, payload) {
-      state.steps[payload.index].url = payload.url + "/"
+      state.steps[payload.index].url = payload.url + '/'
     },
     /**
      *
@@ -308,7 +311,9 @@ export default new Vuex.Store({
           config
             .get(state.steps[0].url)
             .then((response) => {
-              console.log(response.data.disabled_date)
+              console.log('response : ', response.data)
+              state.access = response.data.access
+              if (!state.access) state.ban_reason = response.data.ban_reason
               parameters.local = response.data.language
               parameters.minDate = new Date(response.data.date_begin)
               parameters.maxDate = new Date(response.data.date_end)
@@ -334,8 +339,10 @@ export default new Vuex.Store({
               state.steps[0].datas.value = { id: parameters.minDate }
               commit('SET_CONFIG_ID', response.data.booking_config_type_id)
               state.steps[0].isLoading = false
-              console.log("look at this : ", state.steps[1].url.split('/').reverse()[1]);
-              if (state.steps[1].url.split('/').reverse()[1] != response.data.booking_config_type_id) {
+              console.log('look at this : ', state.steps[1].url.split('/').reverse()[1])
+              if (
+                state.steps[1].url.split('/').reverse()[1] != response.data.booking_config_type_id
+              ) {
                 state.steps[1].url += response.data.booking_config_type_id + '/'
                 state.steps[2].url += response.data.booking_config_type_id + '/'
               }
@@ -391,7 +398,7 @@ export default new Vuex.Store({
       console.log(state)
     },
     setReservation({ state, getters }) {
-      this.commit("SET_STEP_VALUE", { index: 2, value: null })
+      this.commit('SET_STEP_VALUE', { index: 2, value: null })
       console.log(getters.getBookResume)
       const formFilled = getters.getBookResume
       const data = {
@@ -411,7 +418,6 @@ export default new Vuex.Store({
           console.log(response)
           state.steps[3].isLoading = false
           state.steps[3].parameters.reportState = true
-
         })
         .catch(() => {
           state.steps[3].isLoading = false

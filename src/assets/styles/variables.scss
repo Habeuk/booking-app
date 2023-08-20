@@ -1,8 +1,26 @@
-$primary-color: #2563eb;
-$primary-color-estomped: #2564eb30;
-$bg-transition: background-color 0.2s ease-in;
-$color-transition: color 0.2s ease-out;
-$default-font-size: 1.6rem;
+/**
+ * Surcharge des variables de base.
+ * ( i.e se cont des variables donc le nom existe dans wbu-atomique et qui n'ont pas dependance ).
+ */
+$wbu-color-primary: #2563eb;
+$wbu-default-font-size: 1.6rem;
+
+/**
+ * On importe les variables et mixins direment dans ce fichier.
+ *  ( Cette approche permet de surcharger les variables derivers des variables definit plus haut).
+ */
+@import '@stephane888/wbu-atomique/scss/_variables.scss';
+@import '@stephane888/wbu-atomique/scss/wbu-ressources-clean.scss';
+/**
+ * Surcharge des variables derivées.
+ * ( i.e se cont des variables donc le nom existe dans wbu-atomique et qui ont au moins une dependance
+ *   example : $space_bottom: {$wbu-margin} * 3.5; $wbu-btn-font-size-sm: {$wbu-default-font-size} * 0.75 !default; ).
+ */
+//
+/**
+ * Definitions variables propre à l'application
+ * ( Ces variables doivent provenir des variables de base ).
+ */
 $white: #fcfcfc;
 $gray: #cbcdd3;
 $dark: #777777;
@@ -10,3 +28,6 @@ $error: #ef8d9c;
 $orange: #ffc39e;
 $success: #b0db7d;
 $secondary: #99dbb4;
+$primary-color-estomped: #2564eb30;
+$bg-transition: background-color 0.2s ease-in;
+$color-transition: color 0.2s ease-out;
