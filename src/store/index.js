@@ -70,7 +70,6 @@ export default new Vuex.Store({
      */
     SET_STEP_SETTINGS(state, payload) {
       state.steps[payload.index].parameters = payload.parameters
-      console.log(payload)
     },
     /**
      *
@@ -142,7 +141,6 @@ export default new Vuex.Store({
      * @param {{index: number, state: boolean}} payload
      */
     SET_MONITOR_STATE(state, payload) {
-      console.log('debug: ', payload)
       state.steps[1].parameters.monitorList[payload.index].disabled = payload.state
     }
   },
@@ -244,12 +242,10 @@ export default new Vuex.Store({
       const schedulesList = state.steps[1].parameters.schedulesList
 
       //handling each monitors
-      console.log(selectedSchedules)
       state.steps[1].parameters.monitorList.forEach((monitor) => {
         let monitorState = false
         if (selectedSchedules.length) {
           selectedSchedules.forEach((schIndex) => {
-            console.log(schedulesList)
             const schedule = schedulesList[schIndex.time].times[schIndex.index]
             //Disable the monitor filter if necessary
             if (!schedule.monitors.includes(monitor.value)) {
@@ -311,7 +307,6 @@ export default new Vuex.Store({
           config
             .get(state.steps[0].url)
             .then((response) => {
-              console.log('response : ', response.data)
               state.access = response.data.access
               if (!state.access) state.ban_reason = response.data.ban_reason
               parameters.local = response.data.language
@@ -320,16 +315,13 @@ export default new Vuex.Store({
               parameters.disabledDates = [
                 {
                   repeat: {
-                    every: 'weeks',
                     weekdays: response.data.disabled_days.map((day) => day + 1)
                   }
                 }
               ]
               const periodes = response.data.disabled_dates_periode.map((period) => {
-                console.log(period)
                 return { start: new Date(period.value), end: new Date(period.end_value) }
               })
-              console.log(periodes)
               parameters.disabledDates = [
                 ...parameters.disabledDates,
                 ...response.data.disabled_dates.map((date) => new Date(date)),
@@ -339,7 +331,6 @@ export default new Vuex.Store({
               state.steps[0].datas.value = { id: parameters.minDate }
               commit('SET_CONFIG_ID', response.data.booking_config_type_id)
               state.steps[0].isLoading = false
-              console.log('look at this : ', state.steps[1].url.split('/').reverse()[1])
               if (
                 state.steps[1].url.split('/').reverse()[1] != response.data.booking_config_type_id
               ) {
@@ -394,8 +385,6 @@ export default new Vuex.Store({
         default:
           break
       }
-      console.log('parameters: ', parameters)
-      console.log(state)
     },
     setReservation({ state, getters }) {
       this.commit('SET_STEP_VALUE', { index: 2, value: null })
