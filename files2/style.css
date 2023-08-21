@@ -7959,20 +7959,18 @@ html {
 .app-main-contain .offers-content .option-selection:hover .check-circle .cc-rond {
   background-color: rgba(0, 0, 0, 0.2);
 }
-.app-main-contain .offers-content .os-selected .x-circle .cc-round {
-  background-color: rgb(200, 66, 88);
-  border-color: rgb(200, 66, 88);
-}
 .app-main-contain .offers-content .os-selected .check-circle .cc-rond {
   color: #2563eb;
+}
+.app-main-contain .offers-content .os-selected .check-circle .cc-rond svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+  margin-inline: auto;
 }
 .app-main-contain .offers-content .os-selected:hover .check-circle .cc-rond {
   background-color: #2563eb;
   color: white;
-}
-.app-main-contain .offers-content .os-selected:hover .x-circle .cc-round {
-  background-color: rgb(200, 66, 88);
-  border-color: rgb(200, 66, 88);
 }
 .app-main-contain .book-bloc {
   width: 100%;
@@ -8200,6 +8198,9 @@ html {
 .app-main-contain .title-steps span svg {
   height: 18px;
 }
+.app-main-contain .title-steps span.ts-icon svg {
+  height: 32px;
+}
 @media only screen and (min-width: 992px) {
   .app-main-contain {
     width: 75%;
@@ -8222,7 +8223,6 @@ html {
   min-width: 100px;
 }
 .app-main-contain .booking-breadcrumb > ol li.p-menuitem .breadcrumb-icon svg {
-  height: 18px;
   width: 18px;
 }
 .app-main-contain .booking-breadcrumb > ol li.p-menuitem .breadcrumb-icon::before {

@@ -3,6 +3,7 @@
 $first-color: $wbu-color-primary;
 $second-color: rgb(200, 66, 88);
 $gray-color: #f8f9fa;
+
 // encapsule la css.
 .app-main-contain {
   .offers-content {
@@ -93,17 +94,17 @@ $gray-color: #f8f9fa;
     }
 
     .os-selected {
-      .x-circle {
-        .cc-round {
-          background-color: $second-color;
-          border-color: $second-color;
-        }
-      }
-
       .check-circle {
         .cc-rond {
           color: $first-color;
+
           // border-color: $first-color;
+          svg {
+            width: 15px;
+            height: 15px;
+            display: block;
+            margin-inline: auto;
+          }
         }
       }
 
@@ -112,13 +113,7 @@ $gray-color: #f8f9fa;
           .cc-rond {
             background-color: $first-color;
             color: white;
-          }
-        }
 
-        .x-circle {
-          .cc-round {
-            background-color: $second-color;
-            border-color: $second-color;
           }
         }
       }

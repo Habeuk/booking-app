@@ -33,7 +33,7 @@
       index: 1,
       name: "schedule",
       title: "veuillez selectionner les différentes plages horaires",
-      icon: '<svg fill="currentColor" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><path d="M18 2a16 16 0 1 0 16 16A16 16 0 0 0 18 2Zm0 30a14 14 0 1 1 14-14 14 14 0 0 1-14 14Z" class="clr-i-outline clr-i-outline-path-1"/><path d="M18.92 18.4v-7.65a1 1 0 0 0-2 0v8.72l5.9 4a1 1 0 1 0 1.11-1.66Z" class="clr-i-outline clr-i-outline-path-2"/><path d="M8 17.94a9.94 9.94 0 0 1 15.41-8.35l.85-1.36a11.55 11.55 0 1 0-8.53 21L16 27.7a10 10 0 0 1-8-9.76Z" class="clr-i-outline clr-i-outline-path-3"/><path fill="none" d="M0 0h36v36H0z"/></svg>',
+      icon: '<svg fill="currentColor" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><path d="M18 2a16 16 0 1 0 16 16A16 16 0 0 0 18 2Zm6.2 21.18a1 1 0 0 1-1.39.28l-5.9-4v-8.71a1 1 0 0 1 2 0v7.65l5 3.39a1 1 0 0 1 .29 1.39Zm-.35-14.95a11.39 11.39 0 1 0-8.54 20.83L15 30.63a13 13 0 1 1 9.7-23.77Z" class="clr-i-solid clr-i-solid-path-1"/><path fill="none" d="M0 0h36v36H0z"/></svg>',
       url: "/booking-system/views-app-creneaux/",
       resumedLabel: "Créneaux Selectionnés",
       selectable: false,
@@ -136,7 +136,7 @@
       index: 2,
       name: "Résumé",
       title: "Bilan de la commande",
-      icon: "pi pi-server",
+      icon: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M19.45 18.47a1.12 1.12 0 1 1 1.15-1.09 1.13 1.13 0 0 1-1.15 1.09Zm0 1a2.08 2.08 0 1 0-1.45-.63 2.08 2.08 0 0 0 1.47.61Zm.01-15.14A2.07 2.07 0 0 0 18 7.87a2 2 0 0 0 1.47.6 2.08 2.08 0 1 0 0-4.15Zm.8 2.86a1.08 1.08 0 0 1-.81.31 1.11 1.11 0 1 1 1.15-1.08 1.14 1.14 0 0 1-.34.77ZM15.9 10h-.05v.95h.07a1.11 1.11 0 0 1 0 2.22h-.07v1h.07a2.08 2.08 0 1 0 0-4.15Zm-4.58-8C6.43 2 2.46 4 2.46 6.4s4 4.41 8.86 4.41h.1V2Z"/><path fill="currentColor" d="M11.32 12.52a14 14 0 0 1-6.27-1.25 4.45 4.45 0 0 1-2.44-2.38h-.15V12c0 2.43 4 4.4 8.86 4.4h.1v-3.9Z"/><path fill="currentColor" d="M11.32 18.1a14 14 0 0 1-6.27-1.24 4.45 4.45 0 0 1-2.44-2.38h-.15v3.12c0 2.43 4 4.4 8.86 4.4h.1v-3.9ZM13.64 2h2.22v20h-2.22z"/></svg>',
       selectable: false,
       isLoading: false,
       url: "/booking-system/save-reservation/",
@@ -2946,7 +2946,7 @@
             index2 += 1;
           }).filter((element) => typeof element !== "undefined"),
           {
-            icon: "pi pi-user",
+            icon: '<svg viewBox="0 0 15 15" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 0a3.499 3.499 0 1 0 0 6.996A3.499 3.499 0 1 0 7.5 0Zm-2 8.994a3.5 3.5 0 0 0-3.5 3.5v2.497h11v-2.497a3.5 3.5 0 0 0-3.5-3.5h-4Z"/></svg>',
             name: "Moniteur",
             monitor: state2.steps[1].datas.selectedMonitor ? state2.steps[1].datas.selectedMonitor : state2.steps[1].parameters.monitorList.find((element) => !element.disabled),
             value: state2.steps[1].datas.selectedMonitor ? state2.steps[1].datas.selectedMonitor.name : state2.steps[1].parameters.monitorList.find((element) => !element.disabled).name
@@ -5918,7 +5918,6 @@
       };
       const submitDatas = () => {
         if (props.selectedSchedules) {
-          console.log("length: ", props.selectedSchedules);
           const datas = new Array();
           props.schedulesList.forEach((time) => {
             time.times.forEach((schedule) => {
@@ -5944,20 +5943,20 @@
   };
   const _hoisted_1$n = { class: "myi-5" };
   const _hoisted_2$l = { class: "title-steps" };
-  const _hoisted_3$g = { class: "monitor-selector" };
-  const _hoisted_4$9 = { class: "monitor-form d-flex" };
-  const _hoisted_5$9 = { class: "hours-content" };
-  const _hoisted_6$7 = { class: "time-title" };
-  const _hoisted_7$5 = { class: "time-list justify-content-between" };
-  const _hoisted_8$5 = ["disabled", "onClick"];
-  const _hoisted_9$3 = { class: "time" };
-  const _hoisted_10$2 = { class: "hours-footer d-flex mt-4 justify-content-between" };
-  const _hoisted_11$2 = { class: "hours-action w-100 mx-auto justify-content-end d-flex" };
-  const _hoisted_12$2 = { class: "btn-container pr-0" };
-  const _hoisted_13$1 = { class: "mt-2" };
-  const _hoisted_14 = { class: "mb-4" };
-  const _hoisted_15 = { class: "row" };
-  const _hoisted_16 = { class: "col-3 mb-2" };
+  const _hoisted_3$g = ["innerHTML"];
+  const _hoisted_4$9 = { class: "monitor-selector" };
+  const _hoisted_5$9 = { class: "monitor-form d-flex" };
+  const _hoisted_6$7 = { class: "hours-content" };
+  const _hoisted_7$5 = { class: "time-title" };
+  const _hoisted_8$5 = { class: "time-list justify-content-between" };
+  const _hoisted_9$3 = ["disabled", "onClick"];
+  const _hoisted_10$2 = { class: "time" };
+  const _hoisted_11$2 = { class: "hours-footer d-flex mt-4 justify-content-between" };
+  const _hoisted_12$2 = { class: "hours-action w-100 mx-auto justify-content-end d-flex" };
+  const _hoisted_13$1 = { class: "btn-container pr-0" };
+  const _hoisted_14$1 = { class: "mt-2" };
+  const _hoisted_15$1 = { class: "mb-4" };
+  const _hoisted_16 = { class: "row" };
   const _hoisted_17 = { class: "col-3 mb-2" };
   const _hoisted_18 = { class: "col-3 mb-2" };
   const _hoisted_19 = { class: "col-3 mb-2" };
@@ -5965,9 +5964,9 @@
   const _hoisted_21 = { class: "col-3 mb-2" };
   const _hoisted_22 = { class: "col-3 mb-2" };
   const _hoisted_23 = { class: "col-3 mb-2" };
-  const _hoisted_24 = { class: "mb-4" };
-  const _hoisted_25 = { class: "row" };
-  const _hoisted_26 = { class: "col-3 mb-2" };
+  const _hoisted_24 = { class: "col-3 mb-2" };
+  const _hoisted_25 = { class: "mb-4" };
+  const _hoisted_26 = { class: "row" };
   const _hoisted_27 = { class: "col-3 mb-2" };
   const _hoisted_28 = { class: "col-3 mb-2" };
   const _hoisted_29 = { class: "col-3 mb-2" };
@@ -5975,6 +5974,7 @@
   const _hoisted_31 = { class: "col-3 mb-2" };
   const _hoisted_32 = { class: "col-3 mb-2" };
   const _hoisted_33 = { class: "col-3 mb-2" };
+  const _hoisted_34 = { class: "col-3 mb-2" };
   function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_SelectButton = vue.resolveComponent("SelectButton");
     const _component_ProgressBar = vue.resolveComponent("ProgressBar");
@@ -5986,15 +5986,10 @@
         _hoisted_1$n,
         [
           vue.createElementVNode("h6", _hoisted_2$l, [
-            vue.createElementVNode(
-              "span",
-              {
-                class: vue.normalizeClass([$props.icon, "mr-2"])
-              },
-              null,
-              2
-              /* CLASS */
-            ),
+            vue.createElementVNode("span", {
+              innerHTML: $props.icon,
+              class: "mr-2"
+            }, null, 8, _hoisted_3$g),
             vue.createElementVNode(
               "span",
               null,
@@ -6003,8 +5998,8 @@
               /* TEXT */
             )
           ]),
-          vue.createElementVNode("div", _hoisted_3$g, [
-            vue.createElementVNode("div", _hoisted_4$9, [
+          vue.createElementVNode("div", _hoisted_4$9, [
+            vue.createElementVNode("div", _hoisted_5$9, [
               vue.createVNode(_component_SelectButton, {
                 modelValue: $setup.localMonitor,
                 "onUpdate:modelValue": [
@@ -6018,7 +6013,7 @@
               }, null, 8, ["modelValue", "options", "onUpdate:modelValue"])
             ])
           ]),
-          vue.createElementVNode("div", _hoisted_5$9, [
+          vue.createElementVNode("div", _hoisted_6$7, [
             (vue.openBlock(true), vue.createElementBlock(
               vue.Fragment,
               null,
@@ -6029,12 +6024,12 @@
                 }, [
                   vue.createElementVNode(
                     "h5",
-                    _hoisted_6$7,
+                    _hoisted_7$5,
                     vue.toDisplayString(time.name),
                     1
                     /* TEXT */
                   ),
-                  vue.createElementVNode("div", _hoisted_7$5, [
+                  vue.createElementVNode("div", _hoisted_8$5, [
                     (vue.openBlock(true), vue.createElementBlock(
                       vue.Fragment,
                       null,
@@ -6051,12 +6046,12 @@
                         }, [
                           vue.createElementVNode(
                             "span",
-                            _hoisted_9$3,
+                            _hoisted_10$2,
                             vue.toDisplayString(heure.hour),
                             1
                             /* TEXT */
                           )
-                        ], 10, _hoisted_8$5);
+                        ], 10, _hoisted_9$3);
                       }),
                       128
                       /* KEYED_FRAGMENT */
@@ -6076,9 +6071,9 @@
             },
             class: "time-progress-bar w-100"
           }, null, 8, ["value", "pt"]),
-          vue.createElementVNode("div", _hoisted_10$2, [
-            vue.createElementVNode("div", _hoisted_11$2, [
-              vue.createElementVNode("div", _hoisted_12$2, [
+          vue.createElementVNode("div", _hoisted_11$2, [
+            vue.createElementVNode("div", _hoisted_12$2, [
+              vue.createElementVNode("div", _hoisted_13$1, [
                 vue.createVNode(_component_pButton, {
                   disabled: !$setup.canSubmit,
                   onClick: $setup.submitDatas,
@@ -6098,22 +6093,16 @@
       ]),
       vue.withDirectives(vue.createElementVNode(
         "div",
-        _hoisted_13$1,
+        _hoisted_14$1,
         [
-          vue.createElementVNode("div", _hoisted_14, [
+          vue.createElementVNode("div", _hoisted_15$1, [
             vue.createVNode(_component_Skeleton, {
               class: "mb-3",
               animation: "wave",
               width: "40%",
               height: "20px"
             }),
-            vue.createElementVNode("div", _hoisted_15, [
-              vue.createElementVNode("div", _hoisted_16, [
-                vue.createVNode(_component_Skeleton, {
-                  animation: "wave",
-                  height: "30px"
-                })
-              ]),
+            vue.createElementVNode("div", _hoisted_16, [
               vue.createElementVNode("div", _hoisted_17, [
                 vue.createVNode(_component_Skeleton, {
                   animation: "wave",
@@ -6155,22 +6144,22 @@
                   animation: "wave",
                   height: "30px"
                 })
+              ]),
+              vue.createElementVNode("div", _hoisted_24, [
+                vue.createVNode(_component_Skeleton, {
+                  animation: "wave",
+                  height: "30px"
+                })
               ])
             ])
           ]),
-          vue.createElementVNode("div", _hoisted_24, [
+          vue.createElementVNode("div", _hoisted_25, [
             vue.createVNode(_component_Skeleton, {
               class: "mb-3",
               animation: "wave",
               width: "40%"
             }),
-            vue.createElementVNode("div", _hoisted_25, [
-              vue.createElementVNode("div", _hoisted_26, [
-                vue.createVNode(_component_Skeleton, {
-                  animation: "wave",
-                  height: "30px"
-                })
-              ]),
+            vue.createElementVNode("div", _hoisted_26, [
               vue.createElementVNode("div", _hoisted_27, [
                 vue.createVNode(_component_Skeleton, {
                   animation: "wave",
@@ -6208,6 +6197,12 @@
                 })
               ]),
               vue.createElementVNode("div", _hoisted_33, [
+                vue.createVNode(_component_Skeleton, {
+                  animation: "wave",
+                  height: "30px"
+                })
+              ]),
+              vue.createElementVNode("div", _hoisted_34, [
                 vue.createVNode(_component_Skeleton, {
                   animation: "wave",
                   height: "30px"
@@ -6355,31 +6350,28 @@
   const _hoisted_1$m = { class: "myi-5" };
   const _hoisted_2$k = { class: "title-steps h2 font-weight-bold" };
   const _hoisted_3$f = { class: "ts-icon" };
-  const _hoisted_4$8 = { class: "offers-content" };
-  const _hoisted_5$8 = { class: "first-line" };
-  const _hoisted_6$6 = { class: "cc-titre" };
-  const _hoisted_7$4 = { class: "check-circle" };
-  const _hoisted_8$4 = { class: "cc-rond" };
-  const _hoisted_9$2 = { class: "cc-description" };
-  const _hoisted_10$1 = { key: 0 };
-  const _hoisted_11$1 = { key: 1 };
-  const _hoisted_12$1 = ["innerHTML"];
-  const _hoisted_13 = { class: "book-bloc" };
+  const _hoisted_4$8 = ["innerHTML"];
+  const _hoisted_5$8 = { class: "offers-content" };
+  const _hoisted_6$6 = { class: "first-line" };
+  const _hoisted_7$4 = { class: "cc-titre" };
+  const _hoisted_8$4 = { class: "check-circle" };
+  const _hoisted_9$2 = { class: "cc-rond" };
+  const _hoisted_10$1 = ["innerHTML"];
+  const _hoisted_11$1 = { class: "cc-description" };
+  const _hoisted_12$1 = { key: 0 };
+  const _hoisted_13 = { key: 1 };
+  const _hoisted_14 = ["innerHTML"];
+  const _hoisted_15 = { class: "book-bloc" };
   function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_TimeLine = vue.resolveComponent("TimeLine");
     return vue.openBlock(), vue.createElementBlock("div", null, [
       vue.createElementVNode("div", _hoisted_1$m, [
         vue.createElementVNode("h6", _hoisted_2$k, [
           vue.createElementVNode("span", _hoisted_3$f, [
-            vue.createElementVNode(
-              "div",
-              {
-                class: vue.normalizeClass([$props.icon, "h2 mr-2 d-inline-block"])
-              },
-              null,
-              2
-              /* CLASS */
-            )
+            vue.createElementVNode("div", {
+              innerHTML: $props.icon,
+              class: "h2 mr-2 d-inline-block"
+            }, null, 8, _hoisted_4$8)
           ]),
           vue.createTextVNode(
             " " + vue.toDisplayString($props.step_title),
@@ -6387,7 +6379,7 @@
             /* TEXT */
           )
         ]),
-        vue.createElementVNode("div", _hoisted_4$8, [
+        vue.createElementVNode("div", _hoisted_5$8, [
           (vue.openBlock(true), vue.createElementBlock(
             vue.Fragment,
             null,
@@ -6396,8 +6388,8 @@
                 class: "option-selection os-selected",
                 key: index2
               }, [
-                vue.createElementVNode("div", _hoisted_5$8, [
-                  vue.createElementVNode("div", _hoisted_6$6, [
+                vue.createElementVNode("div", _hoisted_6$6, [
+                  vue.createElementVNode("div", _hoisted_7$4, [
                     vue.createElementVNode(
                       "span",
                       null,
@@ -6406,29 +6398,24 @@
                       /* TEXT */
                     )
                   ]),
-                  vue.createElementVNode("div", _hoisted_7$4, [
-                    vue.createElementVNode("span", _hoisted_8$4, [
-                      vue.createElementVNode(
-                        "p",
-                        {
-                          class: vue.normalizeClass(["mb-0", $props.steps[index2 - 1].icon]),
-                          "font-scale": "1"
-                        },
-                        null,
-                        2
-                        /* CLASS */
-                      )
+                  vue.createElementVNode("div", _hoisted_8$4, [
+                    vue.createElementVNode("span", _hoisted_9$2, [
+                      vue.createElementVNode("p", {
+                        class: "mb-0",
+                        innerHTML: $props.steps[index2 - 1].icon,
+                        "font-scale": "1"
+                      }, null, 8, _hoisted_10$1)
                     ])
                   ])
                 ]),
-                vue.createElementVNode("div", _hoisted_9$2, [
+                vue.createElementVNode("div", _hoisted_11$1, [
                   $props.steps[index2 - 1].value instanceof String || typeof $props.steps[index2 - 1].value == "string" ? (vue.openBlock(), vue.createElementBlock(
                     "span",
-                    _hoisted_10$1,
+                    _hoisted_12$1,
                     vue.toDisplayString($props.steps[index2 - 1].value),
                     1
                     /* TEXT */
-                  )) : (vue.openBlock(), vue.createElementBlock("div", _hoisted_11$1, [
+                  )) : (vue.openBlock(), vue.createElementBlock("div", _hoisted_13, [
                     vue.createVNode(_component_TimeLine, {
                       value: $props.steps[index2 - 1].value,
                       layout: "horizontal"
@@ -6436,7 +6423,7 @@
                       content: vue.withCtx((slotProps) => [
                         vue.createElementVNode("p", {
                           innerHTML: slotProps.item.label
-                        }, null, 8, _hoisted_12$1)
+                        }, null, 8, _hoisted_14)
                       ]),
                       _: 2
                       /* DYNAMIC */
@@ -6449,7 +6436,7 @@
             /* KEYED_FRAGMENT */
           ))
         ]),
-        vue.createElementVNode("div", _hoisted_13, [
+        vue.createElementVNode("div", _hoisted_15, [
           vue.createElementVNode(
             "button",
             {

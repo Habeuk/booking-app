@@ -180,7 +180,7 @@ export default new Vuex.Store({
           })
           .filter((element) => typeof element !== 'undefined'),
         {
-          icon: 'pi pi-user',
+          icon: '<svg viewBox="0 0 15 15" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 0a3.499 3.499 0 1 0 0 6.996A3.499 3.499 0 1 0 7.5 0Zm-2 8.994a3.5 3.5 0 0 0-3.5 3.5v2.497h11v-2.497a3.5 3.5 0 0 0-3.5-3.5h-4Z"/></svg>',
           name: 'Moniteur',
           monitor: state.steps[1].datas.selectedMonitor
             ? state.steps[1].datas.selectedMonitor

@@ -38,7 +38,7 @@ export default {
     <div class="myi-5">
       <h6 class="title-steps h2 font-weight-bold">
         <span class="ts-icon">
-          <div :class="icon" class="h2 mr-2 d-inline-block"></div>
+          <div v-html="icon" class="h2 mr-2 d-inline-block"></div>
         </span>
         {{ step_title }}
       </h6>
@@ -51,7 +51,7 @@ export default {
             </div>
             <div class="check-circle">
               <span class="cc-rond">
-                <p class="mb-0" :class="steps[index - 1].icon" font-scale="1"></p>
+                <p class="mb-0" v-html="steps[index - 1].icon" font-scale="1"></p>
               </span>
             </div>
           </div>

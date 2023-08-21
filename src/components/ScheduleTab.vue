@@ -85,13 +85,11 @@ export default {
     }
     const updateFilter = () => {
       const monitors = localMonitor.value ? [localMonitor.value] : []
-      console.log
       emit('updateFilter', { monitors: monitors })
     }
 
     const submitDatas = () => {
       if (props.selectedSchedules) {
-        console.log('length: ', props.selectedSchedules)
         const datas = new Array()
         props.schedulesList.forEach((time) => {
           time.times.forEach((schedule) => {
@@ -120,7 +118,7 @@ export default {
   <div>
     <div class="myi-5" v-show="!isLoading">
       <h6 class="title-steps">
-        <span :class="icon" class="mr-2"></span>
+        <span v-html="icon" class="mr-2"></span>
         <span>{{ title }}</span>
       </h6>
       <div class="monitor-selector">

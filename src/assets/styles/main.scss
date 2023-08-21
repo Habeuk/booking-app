@@ -27,6 +27,12 @@
         height: 18px;
       }
 
+      &.ts-icon {
+        svg {
+          height: 32px;
+        }
+      }
+
       font-size: $wbu-default-font-size * 0.8;
       font-weight: 700;
     }
@@ -54,7 +60,6 @@
         &.p-menuitem {
           .breadcrumb-icon {
             svg {
-              height: 18px;
               width: 18px;
             }
 
