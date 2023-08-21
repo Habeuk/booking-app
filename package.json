@@ -20,9 +20,10 @@
     "drupal-vuejs": "file:../drupal-vuejs",
     "primeicons": "^6.0.1",
     "primevue": "^3.31.0",
-    "primevue-sass-theme": "file:../primevue-sass-themes",
+    "primevue-sass-theme": "file:../primevue-sass-theme",
     "v-calendar": "^3.0.3",
     "vue": "^3.3.4",
+    "vue-router": "^4.2.4",
     "vuex": "^4.0.2"
   },
   "devDependencies": {

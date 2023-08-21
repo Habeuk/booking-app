@@ -6,7 +6,7 @@
 @use '../primevue/main.scss';
 @use 'v-calendar/style.css';
 // ce fichier fait pres de 800Ko.
-@use 'primeicons/primeicons.css';
+// @use 'primeicons/primeicons.css';
 // import custom style
 @use './ScheduleComponent.scss';
 @use './ResumedComponent.scss';
@@ -23,6 +23,10 @@
 
   .title-steps {
     span {
+      svg {
+        height: 18px;
+      }
+
       font-size: $wbu-default-font-size * 0.8;
       font-weight: 700;
     }
@@ -37,7 +41,7 @@
     justify-content: center !important;
     background-color: $primary-color-estomped;
 
-    & > ol {
+    &>ol {
       width: 100%;
 
       li {
@@ -48,8 +52,16 @@
           max-width 0.2s ease-in;
 
         &.p-menuitem {
-          .breadcrumb-icon::before {
-            margin-block: auto;
+          .breadcrumb-icon {
+            svg {
+              height: 18px;
+              width: 18px;
+            }
+
+
+            &::before {
+              margin-block: auto;
+            }
           }
 
           max-width: fit-content;
@@ -79,7 +91,7 @@
             color: white;
             background-color: $wbu-color-primary;
 
-            & + .p-menuitem-separator {
+            &+.p-menuitem-separator {
               svg {
                 color: white;
               }
@@ -91,7 +103,7 @@
           }
 
           &.passed-step {
-            & + .p-menuitem-separator {
+            &+.p-menuitem-separator {
               background-color: $wbu-color-primary;
             }
           }

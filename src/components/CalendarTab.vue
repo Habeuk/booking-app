@@ -22,12 +22,12 @@ export default {
   },
   emits: ['setDate'],
   setup(props, { emit }) {
+    console.log(props)
     const selectedDate = ref(null)
     // date.value.setDate(date.value.getDate() + 1)
     const disabledDates = computed(() => {
       return props.unavailableDates
     })
-    console.log(disabledDates.value)
     const attr = computed(() => {
       return [
         {
@@ -41,7 +41,6 @@ export default {
       // attr.value[0].dates = day.endDate
       if (!day.isDisabled) {
         // date.value = day.date
-        console.log(attr.value)
         // attr.value[0].dates = day
         emit('setDate', { value: { value: day.value, id: day.id }, index: 0 })
       }
@@ -65,7 +64,7 @@ export default {
   </div>
   <div class="main-contain" v-else>
     <h6 class="title-steps">
-      <span :class="icon" class="mr-2"></span>
+      <span class="mr-2" v-html="icon"></span>
       <span>{{ title }}</span>
     </h6>
     <VCalendar

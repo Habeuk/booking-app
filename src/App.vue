@@ -108,7 +108,7 @@ const setReservation = () => {
             <Breadcrumb class="booking-breadcrumb mb-4" :model="getSteps">
               <template #item="{ item }">
                 <div class="py-2 d-flex justify-content-center" @click="selectStep(item.index)">
-                  <span :class="item.icon" class="d-flex breadcrumb-icon mr-md-1"></span>
+                  <span v-html="item.icon" class="d-flex breadcrumb-icon mr-md-1"></span>
                   <span class="step-label">{{ item.label }}</span>
                 </div>
               </template>
