@@ -103,7 +103,7 @@ const setReservation = () => {
   <div class="main-app-container container">
     <div v-if="store.state.access" class="main-app w-100 d-flex">
       <div class="app-main-contain px-md-5 px-2 mx-auto mt-5 mh-50">
-        <div v-if="store.state.currentStep < 3" class="px-5">
+        <div v-if="store.state.currentStep < 3" class="px-md-5">
           <div>
             <Breadcrumb class="booking-breadcrumb mb-4" :model="getSteps">
               <template #item="{ item }">
