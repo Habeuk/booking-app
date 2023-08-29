@@ -1,7 +1,6 @@
 <script lang="ts">
 import { ref } from 'vue'
-import TimeLine from 'primevue/timeline'
-console.log('Hello world')
+//import TimeLine from 'primevue/timeline'
 
 export default {
   name: 'ResumedTab',
@@ -29,8 +28,7 @@ export default {
       isConnected,
       setReservation
     }
-  },
-  components: { TimeLine }
+  }
 }
 </script>
 <template>
@@ -65,11 +63,20 @@ export default {
               {{ steps[index - 1].value }}
             </span>
             <div v-else>
+              <button
+                v-for="(item, ii) in steps[index - 1].value"
+                :key="ii"
+                class="btn btn-light mr-3"
+              >
+                {{ item.label }}
+              </button>
+              <!--
               <TimeLine :value="steps[index - 1].value" layout="horizontal">
                 <template #content="slotProps">
-                  <p v-html="slotProps.item.label"></p>
+                  <div class="btn btn-light" v-html="slotProps.item.label"></div>
                 </template>
               </TimeLine>
+-->
             </div>
           </div>
         </div>
@@ -82,5 +89,3 @@ export default {
     </div>
   </div>
 </template>
-
-<style lang="scss"></style>

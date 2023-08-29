@@ -47,7 +47,7 @@
     justify-content: center !important;
     background-color: $primary-color-estomped;
 
-    &>ol {
+    & > ol {
       width: 100%;
 
       li {
@@ -62,7 +62,6 @@
             svg {
               width: 18px;
             }
-
 
             &::before {
               margin-block: auto;
@@ -96,7 +95,7 @@
             color: white;
             background-color: $wbu-color-primary;
 
-            &+.p-menuitem-separator {
+            & + .p-menuitem-separator {
               svg {
                 color: white;
               }
@@ -108,7 +107,7 @@
           }
 
           &.passed-step {
-            &+.p-menuitem-separator {
+            & + .p-menuitem-separator {
               background-color: $wbu-color-primary;
             }
           }

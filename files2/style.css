@@ -7825,6 +7825,9 @@ html {
   border: 0;
 }
 
+.app-main-contain .monitor-selector .p-disabled {
+  background: rgba(205, 205, 205, 0.3);
+}
 .app-main-contain .hours-content {
   text-align: left;
 }
@@ -7851,20 +7854,25 @@ html {
   background-color: rgba(205, 205, 205, 0.3);
 }
 .app-main-contain .hours-content .time-btn {
-  min-width: 80px;
-  max-width: 140px;
-  padding: 12px 18px;
+  min-width: 135px;
+  max-width: 220px;
+  padding: 1rem;
   background: transparent;
   border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgb(91, 91, 91);
+  border: 1px solid rgb(219, 218, 218);
   transition: border 0.4s, background 0.3s, box-shadow 0.3s, color 0.3s;
   font-weight: bold;
   flex: 1 1 20%;
   max-height: 50px;
   position: relative;
+}
+@media only screen and (min-width: 575px) {
+  .app-main-contain .hours-content .time-btn {
+    padding: 2rem;
+  }
 }
 .app-main-contain .hours-content .time-btn:hover {
   color: #2563eb;
@@ -8302,10 +8310,7 @@ html {
     opacity: 1;
     transform: translateY(0);
   }
-}.main-app[data-v-7a7a37b1] {
-  min-height: 100vh;
-}
-.main-app .p-breadcrumb[data-v-7a7a37b1] {
+}.main-app .p-breadcrumb[data-v-7a7a37b1] {
   padding: 0px;
 }
 .main-app .p-breadcrumb .breadcrumb-element[data-v-7a7a37b1] {

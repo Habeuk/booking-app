@@ -159,7 +159,7 @@ export default new Vuex.Store({
                 case 1:
                   value = step.datas.value.map((schedule) => {
                     return {
-                      label: schedule.begin + '<br/>-<br/>' + schedule.end,
+                      label: schedule.begin + ' - ' + schedule.end,
                       begin: schedule.begin,
                       end: schedule.end
                     }
@@ -278,6 +278,7 @@ export default new Vuex.Store({
       //shortcut for current State
       const schedulesList = state.steps[1].parameters.schedulesList
       const monitorList = state.steps[1].parameters.monitorList
+      console.log('monitorList : ', monitorList, '\n', schedulesList)
 
       let time = 0
       let index = 0
@@ -347,7 +348,7 @@ export default new Vuex.Store({
             .get(state.steps[1].url + state.steps[0].datas.value.id)
             .then((response) => {
               parameters.monitorList = response.data.monitor_list.map((monitor) => {
-                return { ...monitor, value: monitor.value - 1 }
+                return { ...monitor, value: monitor.value - 1, disabled: false }
               })
               parameters.maxSchedules = response.data.creneau_config.limit_reservation
               parameters.schedulesList = response.data.schedules_list.map((period) => {
