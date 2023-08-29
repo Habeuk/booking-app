@@ -22,7 +22,6 @@ export default {
   },
   emits: ['setDate'],
   setup(props, { emit }) {
-    console.log(props)
     const selectedDate = ref(null)
     // date.value.setDate(date.value.getDate() + 1)
     const disabledDates = computed(() => {

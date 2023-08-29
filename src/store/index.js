@@ -275,10 +275,9 @@ export default new Vuex.Store({
      * @param {*} param0
      */
     updateAllSchedule({ commit, state }) {
-      //shortcut for current State
+      // shortcut for current State
       const schedulesList = state.steps[1].parameters.schedulesList
       const monitorList = state.steps[1].parameters.monitorList
-      console.log('monitorList : ', monitorList, '\n', schedulesList)
 
       let time = 0
       let index = 0
@@ -348,14 +347,13 @@ export default new Vuex.Store({
             .get(state.steps[1].url + state.steps[0].datas.value.id)
             .then((response) => {
               parameters.monitorList = response.data.monitor_list.map((monitor) => {
-                return { ...monitor, value: monitor.value - 1, disabled: false }
+                return { ...monitor, value: monitor.value - 1 }
               })
               parameters.maxSchedules = response.data.creneau_config.limit_reservation
+              parameters.hoursRemaining = response.data.hours
               parameters.schedulesList = response.data.schedules_list.map((period) => {
                 if (period.status) {
                   const schedules = period.times.map((schedule) => {
-                    // alert("good")
-                    // console.log("schedule: ", schedule)
                     return {
                       hour: response.data.creneau_config.show_end_hour
                         ? schedule.hour.start + ' - ' + schedule.hour.end
@@ -389,7 +387,7 @@ export default new Vuex.Store({
     },
     setReservation({ state, getters }) {
       this.commit('SET_STEP_VALUE', { index: 2, value: null })
-      console.log(getters.getBookResume)
+
       const formFilled = getters.getBookResume
       const data = {
         creneaux: formFilled[1].value.map((schedule) => {
@@ -404,8 +402,7 @@ export default new Vuex.Store({
       }
       config
         .post(state.steps[2].url, data)
-        .then((response) => {
-          console.log(response)
+        .then(() => {
           state.steps[3].isLoading = false
           state.steps[3].parameters.reportState = true
         })

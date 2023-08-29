@@ -110,12 +110,16 @@ export const stepsList = [
           ]
         }
       ],
+      /**
+       * Value => represente l'index dans le tableaux de moniteurs.( valeur possible 1+n et consecutive )
+       */
       monitorList: [
         { name: 'Ethan', value: 0, disabled: false },
         { name: 'John', value: 1, disabled: false },
         { name: 'Amina', value: 2, disabled: false }
       ],
-      maxSchedules: 10
+      maxSchedules: 10,
+      hoursRemaining: 0
     },
     datas: {
       selectedSchedules: [

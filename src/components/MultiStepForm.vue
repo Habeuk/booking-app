@@ -7,7 +7,7 @@ export default {
   emits: ['changeStep'],
   setup(props, { emit }) {
     const updateStep = () => {
-      console.log('changing step')
+      // console.log('changing step')
     }
 
     return { ...props, updateStep }

@@ -46,7 +46,11 @@ export default {
       type: Number,
       required: true
     },
-    isLoading: Boolean
+    isLoading: Boolean,
+    hoursRemaining: {
+      type: Number,
+      required: true
+    }
   },
   emits: ['validateSchedule', 'changeScheduleState', 'updateFilter'],
   setup(props, { emit }) {
@@ -135,7 +139,7 @@ export default {
       </div>
       <div class="hours-content">
         <div class="block-time" v-for="(time, index) in schedulesList" :key="index">
-          <h5 class="time-title">{{ time.name }}</h5>
+          <h5 class="time-title h6">{{ time.name }}</h5>
           <div class="time-list justify-content-between">
             <button
               class="mb-2 time-btn"
@@ -171,6 +175,8 @@ export default {
         }"
         class="time-progress-bar w-100"
       ></ProgressBar>
+      <!-- cette partie ne fait pas partie de l'application, il faudra voir comment on y procede. -->
+      <div class="py-3">Creneaux restant : {{ hoursRemaining }}</div>
       <div class="hours-footer d-flex mt-4 justify-content-between">
         <div class="hours-action w-100 mx-auto justify-content-end d-flex">
           <div class="btn-container pr-0">
