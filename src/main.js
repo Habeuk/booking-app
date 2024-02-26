@@ -11,6 +11,7 @@ if (application.getAttribute(calendar_selector)) {
   store.commit('SET_STEP_URL', { url: application.getAttribute(calendar_selector), index: 0 })
 }
 if (application.getAttribute(schedule_selector)) {
+  // console.log('data attrib : ', application.getAttribute(schedule_selector))
   store.commit('SET_STEP_URL', { url: application.getAttribute(schedule_selector), index: 1 })
 }
 if (application.getAttribute(save_data_selector)) {

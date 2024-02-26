@@ -42,6 +42,10 @@
 /* */
 /* Page-header-bg */
 /* Permet de surcharger les variables bootstrap */
+/**
+ * Cette fonction prend en parallele le code svg et retourn le string utilisable dans la proprieté background.
+ * ( Function to create an optimized svg url ).
+ */
 .wbu-angle-up {
   transition: ease 0.3s;
 }
@@ -115,7 +119,7 @@
  * Card rotation
  */
 /**
-* translation on hover
+* Translation on hover
 */
 /**
 * Before cover
@@ -176,6 +180,10 @@
 /* */
 /* Page-header-bg */
 /* Permet de surcharger les variables bootstrap */
+/**
+ * Cette fonction prend en parallele le code svg et retourn le string utilisable dans la proprieté background.
+ * ( Function to create an optimized svg url ).
+ */
 .wbu-angle-up {
   transition: ease 0.3s;
 }
@@ -248,7 +256,7 @@
  * Card rotation
  */
 /**
-* translation on hover
+* Translation on hover
 */
 /**
 * Before cover
@@ -339,6 +347,10 @@ html {
 /* */
 /* Page-header-bg */
 /* Permet de surcharger les variables bootstrap */
+/**
+ * Cette fonction prend en parallele le code svg et retourn le string utilisable dans la proprieté background.
+ * ( Function to create an optimized svg url ).
+ */
 .wbu-angle-up {
   transition: ease 0.3s;
 }
@@ -412,7 +424,7 @@ html {
  * Card rotation
  */
 /**
-* translation on hover
+* Translation on hover
 */
 /**
 * Before cover
@@ -8310,9 +8322,9 @@ html {
     opacity: 1;
     transform: translateY(0);
   }
-}.main-app .p-breadcrumb[data-v-b67a182f] {
+}.main-app .p-breadcrumb[data-v-7a7a37b1] {
   padding: 0px;
 }
-.main-app .p-breadcrumb .breadcrumb-element[data-v-b67a182f] {
+.main-app .p-breadcrumb .breadcrumb-element[data-v-7a7a37b1] {
   padding: 16px;
 }

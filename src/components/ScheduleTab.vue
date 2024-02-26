@@ -125,7 +125,7 @@ export default {
         <span v-html="icon" class="mr-2"></span>
         <span>{{ title }}</span>
       </h6>
-      <div class="monitor-selector">
+      <div v-show="monitorList.length > 1" class="monitor-selector">
         <div class="monitor-form d-flex">
           <SelectButton
             v-model="localMonitor"

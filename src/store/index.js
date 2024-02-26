@@ -331,18 +331,21 @@ export default new Vuex.Store({
               state.steps[0].datas.value = { id: parameters.minDate }
               commit('SET_CONFIG_ID', response.data.booking_config_type_id)
               state.steps[0].isLoading = false
-              if (
-                state.steps[1].url.split('/').reverse()[1] != response.data.booking_config_type_id
-              ) {
-                state.steps[1].url += response.data.booking_config_type_id + '/'
-                state.steps[2].url += response.data.booking_config_type_id + '/'
-              }
+              // les routes sont construite par le serveur.
+              // if (
+              //   state.steps[1].url.split('/').reverse()[1] != response.data.booking_config_type_id
+              // ) {
+              //   state.steps[1].url += response.data.booking_config_type_id + '/'
+              //   state.steps[2].url += response.data.booking_config_type_id + '/'
+              // }
             })
             .catch((err) => {
               console.log(err)
             })
           break
         case 1:
+          //console.log('url : ', state.steps[1].url)
+          //console.log('date : ', state.steps[0].datas.value.id)
           config
             .get(state.steps[1].url + state.steps[0].datas.value.id)
             .then((response) => {
